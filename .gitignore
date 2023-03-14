@@ -1,10 +1,5 @@
 target/
 
-### maven
-.mvn
-mvnw.cmd
-mvnw
-
 ### target
 **/src/main/**/target/
 **/src/test/**/target/
@@ -36,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### maven
+mvnw.cmd
+mvnw
+.mvn
