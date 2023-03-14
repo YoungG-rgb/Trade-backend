@@ -2,9 +2,20 @@ package kg.tech.tradebackend.utils;
 
 import lombok.experimental.UtilityClass;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 @UtilityClass
 public class SpecificationHelper {
+
     public static String getContainsLikePattern(String searchTerm) {
         return searchTerm == null || searchTerm.isEmpty() ? "%" : "%" + searchTerm.toLowerCase() + "%";
+    }
+
+    public static <T> Predicate getLikePredicateByField(String fieldName, String filterByField, CriteriaBuilder criteriaBuilder, Root<T> root) {
+        return criteriaBuilder.like(
+                criteriaBuilder.lower(root.get(fieldName)), getContainsLikePattern(filterByField)
+        );
     }
 }

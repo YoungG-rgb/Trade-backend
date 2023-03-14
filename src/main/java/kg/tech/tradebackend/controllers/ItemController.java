@@ -1,6 +1,6 @@
 package kg.tech.tradebackend.controllers;
 
-import kg.tech.tradebackend.domain.models.ItemFilterPattern;
+import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import kg.tech.tradebackend.domain.models.ItemModel;
 import kg.tech.tradebackend.domain.response.ResponseModel;
 import kg.tech.tradebackend.services.ItemService;

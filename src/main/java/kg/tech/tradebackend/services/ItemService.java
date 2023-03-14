@@ -1,6 +1,6 @@
 package kg.tech.tradebackend.services;
 
-import kg.tech.tradebackend.domain.models.ItemFilterPattern;
+import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import kg.tech.tradebackend.domain.models.ItemModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

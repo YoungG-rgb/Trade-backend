@@ -2,7 +2,7 @@ package kg.tech.tradebackend.specifications;
 
 import kg.tech.tradebackend.utils.SpecificationHelper;
 import kg.tech.tradebackend.domain.entities.Item;
-import kg.tech.tradebackend.domain.models.ItemFilterPattern;
+import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -21,15 +21,11 @@ public class ItemSpecification implements Specification<Item> {
     public Predicate toPredicate(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         final List<Predicate> predicates = new ArrayList<>();
 
-        if (filterPattern.getName() != null) predicates.add(getPredicateByField("name", criteriaBuilder, root));
+        if (filterPattern.getName() != null) {
+            predicates.add(SpecificationHelper.getLikePredicateByField("name", filterPattern.getName(), criteriaBuilder, root));
+        }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 
-    private Predicate getPredicateByField(String fieldName, CriteriaBuilder criteriaBuilder, Root<Item> root) {
-        return criteriaBuilder.like(
-                criteriaBuilder.lower(root.get(fieldName)),
-                SpecificationHelper.getContainsLikePattern(filterPattern.getName())
-        );
-    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ext-api/home")
-public class ExtHomePageController extends BaseController {
+public class HomePageExtController extends BaseController {
 
     private final ItemService itemService;
 

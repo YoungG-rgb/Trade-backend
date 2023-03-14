@@ -1,4 +1,4 @@
-package kg.tech.tradebackend.domain.models;
+package kg.tech.tradebackend.domain.filterPatterns;
 
 import kg.tech.tradebackend.domain.enums.Color;
 import lombok.*;

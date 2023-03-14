@@ -11,8 +11,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/order")
-public class OrderRestController extends BaseController {
+@RequestMapping("/api/order")
+public class OrderController extends BaseController {
     private final OrderService orderService;
 
     @GetMapping("/{userId}")

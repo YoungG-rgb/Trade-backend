@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ext-api/users")
 @RequiredArgsConstructor
-public class UserExtRestController extends BaseController {
+public class UserExtController extends BaseController {
 
     private final UserService userService;
 

@@ -11,8 +11,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/coupons")
-public class CouponRestController extends BaseController {
+@RequestMapping("/api/coupons")
+public class CouponController extends BaseController {
     private final CouponService couponService;
 
     @GetMapping

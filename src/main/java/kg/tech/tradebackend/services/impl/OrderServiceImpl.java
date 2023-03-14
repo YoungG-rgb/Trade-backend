@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
                 .findByUserId(userId)
                 .stream()
                 .map(orderMapper::toModel)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Order findById(Long id) throws OrderException {
@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
             case BALANCE -> user.getBalance().compareTo(orderModel.getTotal()) < 0;
             case PAYPAL, COD -> false;
             case CREDIT_CARD ->
-                    BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCVCandCVV() ) && creditCard.getExpiryDate() == null;
+                    BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() ) && creditCard.getExpiryDate() == null;
         }) throw new OrderException("Не хватает средств");
     }
 }

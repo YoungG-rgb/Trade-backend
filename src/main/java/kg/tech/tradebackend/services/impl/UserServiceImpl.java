@@ -1,15 +1,21 @@
 package kg.tech.tradebackend.services.impl;
 
+import kg.tech.tradebackend.domain.entities.Item;
 import kg.tech.tradebackend.domain.exceptions.GatewayException;
 import kg.tech.tradebackend.domain.entities.User;
+import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.mappers.UserMapper;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.UserService;
+import kg.tech.tradebackend.specifications.ItemSpecification;
+import kg.tech.tradebackend.specifications.UserSpecification;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,8 +36,8 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public List<UserModel> getAll() {
-        return userRepository.findAll().stream().map(userMapper::toModel).collect(Collectors.toList());
+    public Page<UserModel> filter(UserFilterPattern userFilterPattern, Pageable pageable) {
+        return userRepository.findAll( new UserSpecification(userFilterPattern), pageable ).map(userMapper::toModel);
     }
 
     @Override

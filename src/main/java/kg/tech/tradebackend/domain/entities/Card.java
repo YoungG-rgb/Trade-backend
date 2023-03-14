@@ -25,6 +25,6 @@ public class Card {
 
     LocalDate expiryDate;
 
-    String CVCandCVV;
+    String cvcAndCvv;
 
 }

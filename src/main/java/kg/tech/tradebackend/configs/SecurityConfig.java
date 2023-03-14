@@ -1,6 +1,7 @@
 package kg.tech.tradebackend.configs;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,11 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    @Value("${spring.default.success-url}")
+    private String defaultSuccessUrl;
 
     public SecurityConfig(@Qualifier("userServiceImpl")UserDetailsService userDetailsService,
                           PasswordEncoder passwordEncoder) {
@@ -36,7 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ext-api/**").permitAll()
                 .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/api/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-                .and().formLogin();
+                .and().formLogin()
+                .defaultSuccessUrl(defaultSuccessUrl);
     }
 
 

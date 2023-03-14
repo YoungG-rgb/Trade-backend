@@ -2,7 +2,7 @@ package kg.tech.tradebackend.services.impl;
 
 import kg.tech.tradebackend.domain.entities.Item;
 import kg.tech.tradebackend.domain.exceptions.RetailmentException;
-import kg.tech.tradebackend.domain.models.ItemFilterPattern;
+import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import kg.tech.tradebackend.domain.models.ItemModel;
 import kg.tech.tradebackend.mappers.ItemMapper;
 import kg.tech.tradebackend.repositories.ItemRepository;
