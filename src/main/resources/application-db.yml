@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/trade
+    username: ${TRADE_DB_USERNAME:postgres}
+    password: ${TRADE_DB_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 6000
+      maximum-pool-size: 20
+      minimum-idle: 10
+      idle-timeout: 3000
+      poolName: HikariCP
+  jpa:
+    hibernate:
+      ddl-auto: update

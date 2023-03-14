@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: db
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${TRADE_USERNAME:trade.service.app@gmail.com}
+    password: ${TRADE_GMAIL_PASS:sbimmaletiwxswin}
+    file_type: ${TRADE_FILE_TYPE:application/vnd.ms-excel}
+
+
+scheduler:
+  enable: ${ENABLE_SCHEDULERS:false}
+  jobs:
+    create-coupon: "0 0 * * * *" #Execute every hour
