@@ -1,5 +1,6 @@
 package kg.tech.tradebackend.domain.models;
 
+import kg.tech.tradebackend.domain.enums.Color;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,6 +18,11 @@ public class ItemModel {
     String name;
     BigDecimal price;
     Integer count;
+    Color dialColor;
+    String glass;
+    String waterResistance;
+    String straps;
+    int standardBatteryLife;
     Double rating;
     String description;
     boolean active;

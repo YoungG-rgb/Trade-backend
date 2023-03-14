@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "cards")
 public class Card {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARDS_SEQ")
     @SequenceGenerator(name = "CARDS_SEQ", sequenceName = "CARDS_SEQ", allocationSize = 1)
