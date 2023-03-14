@@ -7,16 +7,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    @Value("${spring.default.success-url}")
-    private String defaultSuccessUrl;
+    @Value("${spring.default.redirect-url}")
+    private String defaultRedirect;
 
     public SecurityConfig(@Qualifier("userServiceImpl")UserDetailsService userDetailsService,
                           PasswordEncoder passwordEncoder) {
@@ -40,7 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/api/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
                 .and().formLogin()
-                .defaultSuccessUrl(defaultSuccessUrl);
+                .successHandler((request, response, authentication) -> {
+                    Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+
+                    if (roles.contains("ROLE_ADMIN")) {
+                        response.sendRedirect(defaultRedirect + "/admin");
+                    } else if (roles.contains("ROLE_USER")) {
+                        response.sendRedirect(defaultRedirect + "/");
+                    }
+                });
     }
 
 

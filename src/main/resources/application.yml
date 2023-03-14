@@ -8,7 +8,7 @@ spring:
     password: ${TRADE_GMAIL_PASS:sbimmaletiwxswin}
     file_type: ${TRADE_FILE_TYPE:application/vnd.ms-excel}
   default:
-    success-url: ${FRONT_URL:http://localhost:3000/}
+    redirect-url: ${FRONT_URL:http://localhost:3000}
 
 
 scheduler:
