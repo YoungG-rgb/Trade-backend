@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import java.io.IOException;
 import java.util.Set;
 
 @Configuration
@@ -41,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/ext-api/**").permitAll()
                 .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/api/**").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-                .and().formLogin()
+                .and()
+                .formLogin()
                 .successHandler((request, response, authentication) -> {
                     Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
@@ -49,6 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         response.sendRedirect(defaultRedirect + "/admin-panel/Dashboard");
                     } else if (roles.contains("ROLE_USER")) {
                         response.sendRedirect(defaultRedirect + "/");
+                    }
+                })
+                .and()
+                .logout()
+                .addLogoutHandler((request, response, authentication) -> {
+                    try {
+                        response.sendRedirect(defaultRedirect + "/");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 });
     }
