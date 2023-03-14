@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
                     if (roles.contains("ROLE_ADMIN")) {
-                        response.sendRedirect(defaultRedirect + "/admin");
+                        response.sendRedirect(defaultRedirect + "/admin-panel/Dashboard");
                     } else if (roles.contains("ROLE_USER")) {
                         response.sendRedirect(defaultRedirect + "/");
                     }
