@@ -2,7 +2,6 @@ package kg.tech.tradebackend.domain.entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -14,14 +13,17 @@ import javax.persistence.*;
 @Table(name = "images")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Image {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IMAGES_SEQ")
     @SequenceGenerator(name = "IMAGES_SEQ", sequenceName = "IMAGES_SEQ", allocationSize = 1)
     Long id;
 
-    @Lob
-    @Type(type = "org.hibernate.type.ImageType")
-    byte[] picture;
+    String name;
+
+    String format;
+
+    String base64;
 
     boolean isMain;
 }

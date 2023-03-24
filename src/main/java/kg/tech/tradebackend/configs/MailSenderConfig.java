@@ -16,12 +16,12 @@ public class MailSenderConfig {
     private final MailProperty mailProperties;
 
     @Bean
-    public MimeMessage mimeMessage(){
+    public MimeMessage mimeMessage() {
         return new MimeMessage(session());
     }
 
     @Bean
-    public Session session(){
+    public Session session() {
         Properties props = new Properties();
         props.put("mail.smtp.host", mailProperties.getHost());
         props.put("mail.from", mailProperties.getUsername());

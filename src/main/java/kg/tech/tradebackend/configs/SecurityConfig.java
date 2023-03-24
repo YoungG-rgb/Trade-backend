@@ -21,8 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.default.redirect-url}")
     private String defaultRedirect;
 
-    public SecurityConfig(@Qualifier("userServiceImpl")UserDetailsService userDetailsService,
-                          PasswordEncoder passwordEncoder) {
+    public SecurityConfig(@Qualifier("userServiceImpl")UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }

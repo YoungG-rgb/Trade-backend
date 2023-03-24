@@ -11,7 +11,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "imagesId")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemModel {
     Long id;
@@ -23,8 +22,8 @@ public class ItemModel {
     String waterResistance;
     String straps;
     int standardBatteryLife;
-    Double rating;
+    Double rating = 0d;
     String description;
-    boolean active;
-    List<Long> imagesId;
+    boolean active = true;
+    List<ImageModel> imageModels;
 }

@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemModel save(ItemModel itemModel) {
         Item item = itemRepository.save(itemMapper.toEntity(itemModel));
         log.info("itemServiceImpl.save::" + item.getId());
-        return itemModel;
+        return itemMapper.toModel(item);
     }
 
     @Override
