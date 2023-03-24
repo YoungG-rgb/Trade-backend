@@ -1,7 +1,7 @@
 package kg.tech.tradebackend.services.impl;
 
 import kg.tech.tradebackend.domain.entities.Image;
-import kg.tech.tradebackend.domain.exceptions.RetailmentException;
+import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.exceptions.ValidationException;
 import kg.tech.tradebackend.domain.models.ImageModel;
 import kg.tech.tradebackend.mappers.ImageMapper;
@@ -43,7 +43,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void delete(Long id) throws Exception {
         Optional<Image> imageOptional = imageRepository.findById(id);
-        if (imageOptional.isEmpty()) throw new RetailmentException("ITEM IS ALREADY DELETED");
+        if (imageOptional.isEmpty()) throw new TradeException("ITEM IS ALREADY DELETED");
         imageRepository.delete(imageOptional.get());
     }
 

@@ -1,7 +1,7 @@
 package kg.tech.tradebackend.services.impl;
 
 import kg.tech.tradebackend.domain.entities.Item;
-import kg.tech.tradebackend.domain.exceptions.RetailmentException;
+import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import kg.tech.tradebackend.domain.models.ItemModel;
 import kg.tech.tradebackend.mappers.ItemMapper;
@@ -33,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
         Optional<Item> item = itemRepository.findById(id);
         return item
                 .map(itemMapper::toModel)
-                .orElseThrow(() -> new RetailmentException("ITEM_NOT_FOUND"));
+                .orElseThrow(() -> new TradeException("ITEM_NOT_FOUND"));
     }
 
     @Override
@@ -45,14 +45,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemModel update(ItemModel itemModel) throws Exception {
-        if (itemModel.getId() == null) throw new RetailmentException("ID IS NULL");
+        if (itemModel.getId() == null) throw new TradeException("ID IS NULL");
         return this.save(itemModel);
     }
 
     @Override
     public void delete(Long id) throws Exception {
         Optional<Item> itemOptional = itemRepository.findById(id);
-        if (itemOptional.isEmpty()) throw new RetailmentException("ITEM IS ALREADY DELETED");
+        if (itemOptional.isEmpty()) throw new TradeException("ITEM IS ALREADY DELETED");
         itemRepository.delete(itemOptional.get());
     }
 

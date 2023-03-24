@@ -1,14 +1,12 @@
 package kg.tech.tradebackend.services.impl;
 
-import kg.tech.tradebackend.domain.entities.Item;
-import kg.tech.tradebackend.domain.exceptions.GatewayException;
 import kg.tech.tradebackend.domain.entities.User;
+import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.mappers.UserMapper;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.UserService;
-import kg.tech.tradebackend.specifications.ItemSpecification;
 import kg.tech.tradebackend.specifications.UserSpecification;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -41,38 +37,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel findById(Long id) throws GatewayException {
+    public UserModel findById(Long id) throws TradeException {
         Optional<User> user = userRepository.findById(id);
-        return user
-                .map(userMapper::toModel)
-                .orElseThrow(() -> new GatewayException("USER_NOT_FOUND"));
+        return user.map(userMapper::toModel).orElseThrow(() -> new TradeException("USER_NOT_FOUND"));
     }
 
     @Override
-    public UserModel save(UserModel user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(userMapper.toEntity(user));
+    public UserModel save(UserModel userModel) {
+        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        User user = userRepository.save(userMapper.toEntity(userModel));
         log.info("UserServiceImpl.save::user saved");
-        return user;
+        return userMapper.toModel(user);
     }
 
     @Override
-    public UserModel update(UserModel userModel) throws GatewayException {
-        if (userModel.getId() == null) throw new GatewayException("ID is null");
+    public UserModel update(UserModel userModel) throws TradeException {
+        if (userModel.getId() == null) throw new TradeException ("ID is null");
         return this.save(userModel);
     }
 
     @Override
-    public void delete(Long id) throws GatewayException {
+    public void delete(Long id) throws TradeException {
         Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()) throw new GatewayException("USER IS ALREADY DELETED");
+        if (userOptional.isEmpty()) throw new TradeException("USER IS ALREADY DELETED");
         userRepository.delete(userOptional.get());
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("USERNAME IS NULL"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("USERNAME IS NULL"));
     }
 }
