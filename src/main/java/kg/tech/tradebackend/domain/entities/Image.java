@@ -23,7 +23,5 @@ public class Image {
 
     String format;
 
-    String base64;
-
     boolean isMain;
 }

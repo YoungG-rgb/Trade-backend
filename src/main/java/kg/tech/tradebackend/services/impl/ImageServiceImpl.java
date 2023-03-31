@@ -8,6 +8,7 @@ import kg.tech.tradebackend.mappers.ImageMapper;
 import kg.tech.tradebackend.repositories.ImageRepository;
 import kg.tech.tradebackend.services.ImageService;
 import kg.tech.tradebackend.utils.ByteUtil;
+import kg.tech.tradebackend.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import static kg.tech.tradebackend.utils.BaseValidator.isEmpty;
@@ -26,7 +27,6 @@ public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository imageRepository;
     private final ImageMapper imageMapper;
-    private static final String FILE_PATH = "classpath:images/";
 
     @Override
     public ImageModel save(ImageModel imageModel) throws ValidationException, IOException {
@@ -49,7 +49,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageModel> findAll() {
-        return imageRepository.findAll().stream().map(imageMapper::toModel).toList();
+        return imageRepository.findAll().stream().map(image -> {
+            try {
+                return imageMapper.toModel(image);
+            } catch (TradeException ex) {
+                throw new RuntimeException(ex);
+            }
+        }).toList();
     }
 
     private ImageModel compressImageAndGetModel(ImageModel model) throws IOException, ValidationException {
@@ -57,7 +63,9 @@ public class ImageServiceImpl implements ImageService {
         model.setName(UUID.randomUUID().toString());
 
         try( ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            FileOutputStream outputStream = new FileOutputStream(FILE_PATH + model.getName() + "." + model.getFormat()) ) {
+            FileOutputStream outputStream =
+                    new FileOutputStream(Constants.FILE_PATH + model.getName() + "." + model.getFormat())) {
+
             ByteUtil.compressImage(
                     new ByteArrayInputStream( ByteUtil.toByte( model.getBase64() ) ),
                     byteArrayOutputStream,
