@@ -13,5 +13,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     @Query("select c from Coupon c where c.id = :id and c.isValid = true")
     Coupon findByIdAndValidIsTrue(Long id);
 
-
+    @Query("select c from Coupon c where c.id in (:ids) and c.isValid = true")
+    List<Coupon> findAllByIdInAndValidIsTrue(List<Long> ids);
 }

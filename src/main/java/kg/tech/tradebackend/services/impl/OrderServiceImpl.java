@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,14 +45,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void subtractAndToInvalidity(OrderModel orderModel, List<Long> coupons) {
-        BigDecimal subtractedTotal = orderModel.getTotal().subtract(applyCoupons(coupons));
+        List<Coupon> couponsEntity = couponRepository.findAllByIdInAndValidIsTrue(coupons);
+        BigDecimal subtractedTotal = orderModel.getTotal().subtract(applyCoupons(couponsEntity));
         orderModel.setTotal(subtractedTotal);
 
-        for(Long id: coupons) {
-            Coupon coupon = couponRepository.findById(id).get();
-            coupon.setValid(false);
-            couponRepository.save(coupon);
-        }
+        couponsEntity.forEach(coupon -> coupon.setValid(false));
+        couponRepository.saveAll(couponsEntity);
     }
 
     @Override
@@ -106,24 +105,19 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new OrderException("ORDER_NOT_FOUND"));
     }
 
-    private BigDecimal applyCoupons(List<Long> coupons) {
+    private BigDecimal applyCoupons(List<Coupon> coupons) {
         return coupons
                 .stream()
-                .map(couponRepository::findByIdAndValidIsTrue)
                 .map(Coupon::getBonus)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
     }
 
     private void validateOrder(OrderModel orderModel) throws OrderException {
-        User user = userRepository.findById(orderModel.getUserId()).get();
+        User user = userRepository.findById(orderModel.getUserId()).orElseThrow(() -> new OrderException("Пользователя с таким id нет"));
         Card creditCard = user.getCreditCard();
 
-        if (userRepository
-                .findById(orderModel.getUserId())
-                .orElseThrow(() -> new OrderException("Пользователя не существует"))
-                .getAddress() == null
-        ) throw new OrderException("Пожалуйста, укажите адрес");
+        if (user.getAddress() == null) throw new OrderException("Пожалуйста, укажите адрес");
 
         if (switch(orderModel.getPaymentMethod()) {
             case BALANCE -> user.getBalance().compareTo(orderModel.getTotal()) < 0;
