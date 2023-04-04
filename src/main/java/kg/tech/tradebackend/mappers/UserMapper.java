@@ -2,6 +2,7 @@ package kg.tech.tradebackend.mappers;
 
 import kg.tech.tradebackend.domain.entities.User;
 import kg.tech.tradebackend.domain.models.UserModel;
+import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import org.mapstruct.*;
 
 @Mapper(uses = {RoleMapper.class, CardMapper.class, PhoneMapper.class,
@@ -22,4 +23,8 @@ public interface UserMapper {
 
     @InheritInverseConfiguration
     UserModel toModel(User user);
+
+    User toEntity(UserRegisterModel userModel);
+
+    UserRegisterModel toRegisterModel(User user);
 }

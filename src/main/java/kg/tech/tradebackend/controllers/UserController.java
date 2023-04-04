@@ -1,6 +1,7 @@
 package kg.tech.tradebackend.controllers;
 
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
+import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import kg.tech.tradebackend.domain.response.ResponseModel;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.services.UserService;
@@ -28,6 +29,11 @@ public class UserController extends BaseController {
 
     @PostMapping
     public ResponseModel<UserModel> register(@RequestBody UserModel userModel) {
+        return successResponse(userService.save(userModel));
+    }
+
+    @PostMapping("/register")
+    public ResponseModel<UserRegisterModel> register(@RequestBody UserRegisterModel userModel) {
         return successResponse(userService.save(userModel));
     }
 

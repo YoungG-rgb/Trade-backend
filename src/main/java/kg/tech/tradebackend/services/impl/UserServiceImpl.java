@@ -3,6 +3,7 @@ package kg.tech.tradebackend.services.impl;
 import kg.tech.tradebackend.domain.entities.User;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
+import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import kg.tech.tradebackend.mappers.UserMapper;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.repositories.UserRepository;
@@ -48,6 +49,14 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.save(userMapper.toEntity(userModel));
         log.info("UserServiceImpl.save::user saved");
         return userMapper.toModel(user);
+    }
+
+    @Override
+    public UserRegisterModel save(UserRegisterModel userModel) {
+        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        User user = userRepository.save(userMapper.toEntity(userModel));
+        log.info("UserServiceImpl.save::user saved");
+        return userMapper.toRegisterModel(user);
     }
 
     @Override
