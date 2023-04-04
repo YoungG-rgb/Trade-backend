@@ -1,11 +1,13 @@
 package kg.tech.tradebackend.services.impl;
 
+import kg.tech.tradebackend.domain.entities.Role;
 import kg.tech.tradebackend.domain.entities.User;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import kg.tech.tradebackend.mappers.UserMapper;
 import kg.tech.tradebackend.domain.models.UserModel;
+import kg.tech.tradebackend.repositories.RoleRepository;
 import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.UserService;
 import kg.tech.tradebackend.specifications.UserSpecification;
@@ -20,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
@@ -52,10 +57,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserRegisterModel save(UserRegisterModel userModel) {
+    public UserRegisterModel save(UserRegisterModel userModel) throws TradeException {
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
         User user = userRepository.save(userMapper.toEntity(userModel));
-        log.info("UserServiceImpl.save::user saved");
+
+        // save role USER_ROLE
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepository.findById(2L).orElseThrow(() -> new TradeException("В базе нет роли для юзера")));
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        log.info("UserServiceImpl.save::new user saved");
         return userMapper.toRegisterModel(user);
     }
 

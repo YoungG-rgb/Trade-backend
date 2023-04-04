@@ -28,12 +28,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping
-    public ResponseModel<UserModel> register(@RequestBody UserModel userModel) {
-        return successResponse(userService.save(userModel));
-    }
-
-    @PostMapping("/register")
-    public ResponseModel<UserRegisterModel> register(@RequestBody UserRegisterModel userModel) {
+    public ResponseModel<UserModel> save(@RequestBody UserModel userModel) {
         return successResponse(userService.save(userModel));
     }
 
