@@ -20,6 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     @Value("${spring.default.redirect-url}")
     private String defaultRedirect;
+    @Value("${spring.default.admin-url}")
+    private String defaultAdminRedirect;
 
     public SecurityConfig(@Qualifier("userServiceImpl")UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
@@ -47,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
                     if (roles.contains("ROLE_ADMIN")) {
-                        response.sendRedirect(defaultRedirect + "/admin-panel/Dashboard");
+                        response.sendRedirect(defaultAdminRedirect);
                     } else if (roles.contains("ROLE_USER")) {
                         response.sendRedirect(defaultRedirect + "/");
                     }

@@ -1,6 +1,7 @@
 package kg.tech.tradebackend.configs;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,6 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class MailSenderConfig {
@@ -34,7 +36,11 @@ public class MailSenderConfig {
     @Bean
     public Transport transport() throws MessagingException {
         Transport transport = session().getTransport();
-        transport.connect(mailProperties.getUsername(), mailProperties.getPassword());
+        try {
+            transport.connect(mailProperties.getUsername(), mailProperties.getPassword());
+        } catch (Exception exception) {
+            log.error("Не удалось подключиться к gmail.com");
+        }
         return transport;
     }
 }

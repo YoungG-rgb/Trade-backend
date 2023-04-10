@@ -9,6 +9,7 @@ spring:
     file_type: ${TRADE_FILE_TYPE:application/vnd.ms-excel}
   default:
     redirect-url: ${FRONT_URL:http://localhost:3000}
+    admin-url: ${ADMIN_URL:http://localhost:8080/admin/index}
 
 
 scheduler:
