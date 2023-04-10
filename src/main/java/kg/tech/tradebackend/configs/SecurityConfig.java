@@ -18,8 +18,8 @@ import java.util.Set;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    @Value("${spring.default.redirect-url}")
-    private String defaultRedirect;
+    @Value("${spring.default.front-url}")
+    private String defaultFrontRedirect;
     @Value("${spring.default.admin-url}")
     private String defaultAdminRedirect;
 
@@ -48,17 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler((request, response, authentication) -> {
                     Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-                    if (roles.contains("ROLE_ADMIN")) {
-                        response.sendRedirect(defaultAdminRedirect);
-                    } else if (roles.contains("ROLE_USER")) {
-                        response.sendRedirect(defaultRedirect + "/");
-                    }
+                    if (roles.contains("ROLE_ADMIN")) response.sendRedirect(defaultAdminRedirect);
+                    else response.sendRedirect(defaultFrontRedirect);
                 })
                 .and()
                 .logout()
                 .addLogoutHandler((request, response, authentication) -> {
                     try {
-                        response.sendRedirect(defaultRedirect + "/");
+                        response.sendRedirect(defaultFrontRedirect);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
