@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
         // save role USER_ROLE
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepository.findById(2L).orElseThrow(() -> new TradeException("В базе нет роли для юзера")));
+        roles.add(roleRepository.findByName("ROLE_USER").orElseThrow(() -> new TradeException("В базе нет роли для юзера")));
         user.setRoles(roles);
         userRepository.save(user);
 
