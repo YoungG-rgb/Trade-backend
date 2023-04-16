@@ -19,9 +19,9 @@ public class Image {
     @SequenceGenerator(name = "IMAGES_SEQ", sequenceName = "IMAGES_SEQ", allocationSize = 1)
     Long id;
 
-    String name;
-
-    String format;
+    @Lob
+    @Column(length = Integer.MAX_VALUE)
+    byte[] picture;
 
     boolean isMain;
 }

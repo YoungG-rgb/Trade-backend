@@ -1,6 +1,5 @@
 package kg.tech.tradebackend.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,13 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class ImageModel {
     Long id;
 
-    String name;
-
-    @JsonProperty(required = true)
-    String base64;
-
-    @JsonProperty(required = true)
-    String format;
+    byte [] picture;
 
     boolean isMain = false;
 

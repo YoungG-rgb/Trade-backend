@@ -29,10 +29,9 @@ public class ImageServiceImpl implements ImageService {
     private final ImageMapper imageMapper;
 
     @Override
-    public ImageModel save(ImageModel imageModel) throws ValidationException, IOException {
-        ImageModel compressedImage = compressImageAndGetModel(imageModel);
-        imageRepository.save(imageMapper.toEntity(compressedImage));
-        return compressedImage;
+    public ImageModel save(ImageModel imageModel) {
+        Image savedImage = imageRepository.save(imageMapper.toEntity(imageModel));
+        return imageMapper.toModel(savedImage);
     }
 
     @Override
@@ -49,33 +48,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<ImageModel> findAll() {
-        return imageRepository.findAll().stream().map(image -> {
-            try {
-                return imageMapper.toModel(image);
-            } catch (TradeException ex) {
-                throw new RuntimeException(ex);
-            }
-        }).toList();
+        return imageRepository.findAll().stream().map(imageMapper::toModel).toList();
     }
-
-    private ImageModel compressImageAndGetModel(ImageModel model) throws IOException, ValidationException {
-        if(isEmpty(model.getBase64())) throw new ValidationException("Введите картинку");
-        model.setName(UUID.randomUUID().toString());
-
-        try( ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            FileOutputStream outputStream =
-                    new FileOutputStream(Constants.FILE_PATH + model.getName() + "." + model.getFormat())) {
-
-            ByteUtil.compressImage(
-                    new ByteArrayInputStream( ByteUtil.toByte( model.getBase64() ) ),
-                    byteArrayOutputStream,
-                    model.getFormat()
-            );
-            byte [] compressedBytes = byteArrayOutputStream.toByteArray();
-            outputStream.write(compressedBytes, 0, compressedBytes.length);
-        }
-        return model;
-    }
-
 
 }
