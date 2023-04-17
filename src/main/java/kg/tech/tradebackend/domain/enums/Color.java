@@ -7,7 +7,9 @@ import lombok.Getter;
 public enum Color {
     BLACK("Черный"),
     WHITE("Белый"),
-    GRAY("Серый");
+    GRAY("Серый"),
+    GREEN("Зеленый"),
+    BLUE("Голубой");
 
     @Getter private final String description;
 }

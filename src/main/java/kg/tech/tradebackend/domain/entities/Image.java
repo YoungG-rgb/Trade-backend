@@ -2,6 +2,7 @@ package kg.tech.tradebackend.domain.entities;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class Image {
     Long id;
 
     @Lob
-    @Column(length = Integer.MAX_VALUE)
+    @Type(type = "org.hibernate.type.BinaryType")
     byte[] picture;
 
     boolean isMain;

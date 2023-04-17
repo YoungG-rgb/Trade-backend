@@ -55,5 +55,18 @@ public class Item {
     )
     List<Image> images;
 
-
+    public Item(String name, BigDecimal price, Integer count, Double rating, Color dialColor, String glass, String waterResistance, String straps, int standardBatteryLife, String description, boolean isActive, List<Image> images) {
+        this.name = name;
+        this.price = price;
+        this.count = count;
+        this.rating = rating;
+        this.dialColor = dialColor;
+        this.glass = glass;
+        this.waterResistance = waterResistance;
+        this.straps = straps;
+        this.standardBatteryLife = standardBatteryLife;
+        this.description = description;
+        this.isActive = isActive;
+        this.images = images;
+    }
 }

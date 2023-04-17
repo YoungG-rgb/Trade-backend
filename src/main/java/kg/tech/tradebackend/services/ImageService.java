@@ -1,6 +1,5 @@
 package kg.tech.tradebackend.services;
 
-import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.exceptions.ValidationException;
 import kg.tech.tradebackend.domain.models.ImageModel;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    ImageModel save(ImageModel imageModel) throws ValidationException, IOException, TradeException;
+    ImageModel save(ImageModel imageModel);
 
     ImageModel update(ImageModel imageModel) throws ValidationException, IOException;
 
