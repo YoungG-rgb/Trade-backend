@@ -9,10 +9,10 @@ import org.mapstruct.Mapping;
 @Mapper(uses = ImageMapper.class)
 public interface ItemMapper {
 
-    @Mapping(target = "images", source = "imageModels")
+//    @Mapping(target = "images", source = "imageModels")
     Item toEntity(ItemModel itemModel);
 
-    @InheritInverseConfiguration
+//    @InheritInverseConfiguration
     ItemModel toModel(Item item);
 
 }

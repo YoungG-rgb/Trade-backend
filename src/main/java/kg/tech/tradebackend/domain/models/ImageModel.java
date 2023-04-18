@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class ImageModel {
     Long id;
 
-    byte [] picture;
+//    byte [] picture;
 
     boolean isMain = false;
 
