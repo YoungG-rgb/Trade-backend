@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum Color {
-    BLACK("Черный"),
-    WHITE("Белый"),
-    GRAY("Серый"),
-    GREEN("Зеленый"),
-    BLUE("Голубой");
+    BLACK("#000000"),
+    WHITE("#ffffff"),
+    GRAY("#808080"),
+    GREEN("#008000"),
+    BLUE("#0000ff");
 
-    @Getter private final String description;
+    @Getter private final String code;
 }

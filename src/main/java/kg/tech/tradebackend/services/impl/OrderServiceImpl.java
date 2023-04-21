@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     OrderMapper orderMapper;
     EmailSenderService emailSenderService;
     CouponRepository couponRepository;
-    private final UserRepository userRepository;
+    UserRepository userRepository;
 
     @Override
     public OrderModel save(OrderModel orderModel, List<Long> coupons) throws Exception {
