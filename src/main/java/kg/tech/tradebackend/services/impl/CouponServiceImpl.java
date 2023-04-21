@@ -47,12 +47,4 @@ public class CouponServiceImpl implements CouponService {
                 .toList();
     }
 
-    @Override
-    public List<CouponModel> findByUserId(Long userId) {
-        return couponRepository
-                .findByUserId(userId)
-                .stream()
-                .map(couponMapper::toModel)
-                .toList();
-    }
 }

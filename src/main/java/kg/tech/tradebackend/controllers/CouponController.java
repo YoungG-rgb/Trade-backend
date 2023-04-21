@@ -25,11 +25,6 @@ public class CouponController extends BaseController {
         return successResponse(couponService.save(couponModel));
     }
 
-    @GetMapping("/{userId}")
-    public ResponseModel<List<CouponModel>> getAllByUserId(@PathVariable Long userId) {
-        return successResponse(couponService.findByUserId(userId));
-    }
-
     @DeleteMapping("/{id}")
     public ResponseModel<String> delete(@PathVariable Long id) throws OrderException {
         couponService.delete(id);

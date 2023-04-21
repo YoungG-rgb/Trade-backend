@@ -37,12 +37,6 @@ public class User implements UserDetails {
 
     LocalDate updatedAt;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(name = "users_orders",
-            joinColumns = {@JoinColumn(name = "users_id")},
-            inverseJoinColumns = {@JoinColumn(name = "orders_id")})
-    List<Order> orders;
-
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     Address address;
 

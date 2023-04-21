@@ -13,6 +13,4 @@ public interface CouponService {
 
     List<CouponModel> getAll();
 
-    List<CouponModel> findByUserId(Long userId);
-
 }

@@ -15,5 +15,4 @@ public class CouponModel {
 
     boolean isValid;
 
-    Long userId;
 }

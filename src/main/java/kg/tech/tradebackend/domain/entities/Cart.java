@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +25,7 @@ public class Cart {
 
     BigDecimal totalAmount;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    User user;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    List<Order> orders;
 
 }

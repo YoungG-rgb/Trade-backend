@@ -26,7 +26,4 @@ public class Coupon {
 
     BigDecimal bonus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
 }
