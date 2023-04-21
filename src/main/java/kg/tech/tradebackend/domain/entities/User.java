@@ -55,9 +55,6 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     Card creditCard;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    Cart cart;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

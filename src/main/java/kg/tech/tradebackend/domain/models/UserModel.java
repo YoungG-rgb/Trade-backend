@@ -29,11 +29,9 @@ public class UserModel {
     LocalDate createdAt;
 
     AddressModel addressModel;
-    CartModel cartModel;
     CardModel creditCardModel;
 
     List<PhoneModel> phoneModels;
     List<CouponModel> couponModels;
-    List<OrderModel> orderModels;
     List<RoleModel> roleModels;
 }

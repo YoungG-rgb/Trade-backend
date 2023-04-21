@@ -3,6 +3,8 @@ package kg.tech.tradebackend.domain.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,4 +17,5 @@ public class CouponModel {
 
     boolean isValid;
 
+    BigDecimal bonus;
 }

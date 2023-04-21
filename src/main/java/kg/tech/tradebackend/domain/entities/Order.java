@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     OrderStatus status;
 
-    BigDecimal total;
+    BigDecimal total = BigDecimal.ZERO;
 
     LocalDateTime createdAt;
     LocalDate deliverDate;
@@ -40,10 +41,13 @@ public class Order {
     @JoinTable(name = "orders_item",
             joinColumns = {@JoinColumn(name = "orders_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")})
-    List<Item> items;
+    List<Item> items = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void addToTotal(BigDecimal price) {
+        this.total.add(price);
+    }
 }
