@@ -13,7 +13,7 @@ public class BaseValidator {
         return Arrays.stream(charSequences).allMatch(CharSequence::isEmpty);
     }
 
-    public static void isValidEmail(String email) throws Exception {
-        if (!email.matches(EMAIL_REGEX)) throw new ValidationException("Неверный формат mail адреса");
+    public static boolean isValidEmail(String email) {
+        return email.matches(EMAIL_REGEX);
     }
 }

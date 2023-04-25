@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import java.util.Date;
+import java.util.StringJoiner;
 
 import static kg.tech.tradebackend.utils.BaseValidator.isValidEmail;
 
@@ -39,28 +40,54 @@ public class EmailServiceImpl implements EmailSenderService {
     @Override
     public boolean send(Long userId, String subject, String body, byte[] attachment, String fileName) throws Exception {
         String email = userRepository.findById(userId).get().getEmail();
-        isValidEmail(email);
 
-        if (attachment != null) {
-            Multipart multipart = new MimeMultipart();
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(attachment, mailProperties.getFileType())));
-            messageBodyPart.setFileName(fileName);
-            multipart.addBodyPart(messageBodyPart);
+        if (isValidEmail(email)) {
+            if (attachment != null) {
+                Multipart multipart = new MimeMultipart();
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(attachment, mailProperties.getFileType())));
+                messageBodyPart.setFileName(fileName);
+                multipart.addBodyPart(messageBodyPart);
 
-            mimeMessage.setContent(multipart);
+                mimeMessage.setContent(multipart);
+            }
+
+            try (transport) {
+                mimeMessage.setRecipients(Message.RecipientType.TO, email);
+                mimeMessage.setSubject(subject);
+                mimeMessage.setSentDate(new Date());
+                mimeMessage.setText(body);
+
+                transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+            }
+
+            log.info("send data to email: " + email);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean send(String email, String decodedPassword, String username) throws Exception {
+        if (isValidEmail(email)) {
+            try (transport) {
+                mimeMessage.setRecipients(Message.RecipientType.TO, email);
+                mimeMessage.setSubject("REGISTRATION on TRADE");
+                mimeMessage.setSentDate(new Date());
+                mimeMessage.setText(
+                        new StringJoiner("\n")
+                                .add("Пользователь: " + username)
+                                .add("Пароль: " + decodedPassword)
+                                .toString()
+                );
+
+                transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+            }
+
+            log.info("send data to email: " + email);
+            return true;
         }
 
-        try (transport) {
-            mimeMessage.setRecipients(Message.RecipientType.TO, email);
-            mimeMessage.setSubject(subject);
-            mimeMessage.setSentDate(new Date());
-            mimeMessage.setText(body);
-
-            transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
-        }
-
-        log.info("send data to email: " + email);
-        return true;
+        return false;
     }
 }

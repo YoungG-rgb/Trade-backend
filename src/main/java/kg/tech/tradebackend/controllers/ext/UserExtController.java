@@ -1,7 +1,6 @@
 package kg.tech.tradebackend.controllers.ext;
 
 import kg.tech.tradebackend.controllers.BaseController;
-import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import kg.tech.tradebackend.domain.response.ResponseModel;
 import kg.tech.tradebackend.services.UserService;
@@ -19,7 +18,7 @@ public class UserExtController extends BaseController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseModel<UserRegisterModel> register(@RequestBody UserRegisterModel userModel) throws TradeException {
+    public ResponseModel<UserRegisterModel> register(@RequestBody UserRegisterModel userModel) throws Exception {
         return successResponse(userService.save(userModel));
     }
 }

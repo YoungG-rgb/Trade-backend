@@ -3,11 +3,13 @@ package kg.tech.tradebackend.domain.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRegisterModel {
     Long id;
@@ -21,4 +23,5 @@ public class UserRegisterModel {
     @NonNull
     String email;
 
+    List<RoleModel> roleModels;
 }

@@ -22,7 +22,9 @@ public interface UserMapper {
     @InheritInverseConfiguration
     UserModel toModel(User user);
 
+    @Mapping(target = "roles", source = "roleModels")
     User toEntity(UserRegisterModel userModel);
 
+    @Mapping(target = "roleModels", source = "roles")
     UserRegisterModel toRegisterModel(User user);
 }
