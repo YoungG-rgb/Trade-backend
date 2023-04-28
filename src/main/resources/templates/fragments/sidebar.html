@@ -1,0 +1,74 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <a href="index" class="brand-link">
+        <button class="btn btn-secondary" type="button" style="width: 100%" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/>
+                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z"/>
+            </svg>
+            <span class="brand-text font-weight-light">Админ панель</span>
+        </button>
+    </a>
+    <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition">
+        <div class="os-resize-observer-host observed">
+            <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
+        </div>
+        <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
+            <div class="os-resize-observer"></div>
+        </div>
+        <div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 394px;"></div>
+        <div class="os-padding">
+            <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
+                <div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+                    <!-- USER LOGO -->
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="/images/avatar5.png" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <div class="info">
+                            <a href="index" class="d-block">
+                                <p th:text="${authenticatedUsername}"></p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- NAV ITEMS -->
+                    <nav class="mt-2">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <!-- TABLES -->
+                            <button class="nav-link active btn-outline-secondary" id="v-pills-qrGroup-tab" data-toggle="pill"
+                                    data-target="#v-pills-qrGroup" type="button"
+                                    role="tab" aria-controls="v-pills-qrGroup" aria-selected="false"
+                                    style="color: white">
+                                <i class="bi bi-grid-3x2-gap-fill"></i> Пользователи
+                            </button>
+
+                            <button class="nav-link btn-outline-secondary" id="v-pills-roles-tab" data-toggle="pill"
+                                    data-target="#v-pills-roles" type="button"
+                                    role="tab" aria-controls="v-pills-roles" aria-selected="false"
+                                    style="color: white">
+                                <i class="bi bi-grid-3x2-gap-fill"></i> Роли
+                            </button>
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="scrolling">
+            <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+                <div class="os-scrollbar-track">
+                    <div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div>
+                </div>
+            </div>
+            <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
+                <div class="os-scrollbar-track">
+                    <div class="os-scrollbar-handle"
+                         style="height: 29.0655%; transform: translate(0px, 68.1006px);"></div>
+                </div>
+            </div>
+            <div class="os-scrollbar-corner"></div>
+        </div>
+    </div>
+</aside>

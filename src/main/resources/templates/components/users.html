@@ -1,0 +1,73 @@
+<div class="container-fluid">
+<!--    <div class="col-md-12">-->
+<!--        <form id="searchQrGroupForm" th:object="${}" method="post"><br>-->
+<!--            <div class="row">-->
+<!--                <div class="col-4">-->
+<!--                    <input type="text" class="form-control" placeholder="Имя" th:field="*{name}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <input type="text" class="form-control" placeholder="Код группы" th:field="*{code}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="isActive">Выберите:</label>-->
+<!--                    <select name="isActive" id="isActive" th:field="*{isActive}">-->
+<!--                        <option value="all">Все</option>-->
+<!--                        <option value="true">Активные</option>-->
+<!--                        <option value="false">Неактивные</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <br><br>-->
+<!--                <div class="col-4">-->
+<!--                    <button id="reloadFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+    <br>
+    <div class="row">
+        <div class="col-9">
+            <h2>Список всех пользователей</h2><br>
+        </div>
+        <div class="col-3">
+            <button data-toggle="modal" data-target="#userAddForm" class="btn btn-success">Добавить пользователя</button>
+        </div>
+    </div>
+
+    <table id="qrGroup-table" class="table table-hover table-bordered" data-order='[[0, "desc"]]'>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Код группы</th>
+            <th>Qr коды</th>
+            <th>Актуально</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div>
+        <div id="userAddForm" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">Добавление пользователя</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="button" class="btn btn-success" id="addNewQrGroupButton" >Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
