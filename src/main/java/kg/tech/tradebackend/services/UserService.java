@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService{
 
     UserModel findById(Long id) throws Exception;
-    Page<UserModel> filter(UserFilterPattern userFilterPattern, Pageable pageable);
+    Page<UserModel> filter(UserFilterPattern userFilterPattern);
     UserModel save(UserModel user);
     UserRegisterModel save(UserRegisterModel user) throws Exception;
     UserModel update(UserModel userModel) throws Exception;

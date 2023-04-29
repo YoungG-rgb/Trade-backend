@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -35,8 +37,14 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public Page<UserModel> filter(UserFilterPattern userFilterPattern, Pageable pageable) {
-        return userRepository.findAll( new UserSpecification(userFilterPattern), pageable ).map(userMapper::toModel);
+    public Page<UserModel> filter(UserFilterPattern userFilterPattern) {
+        Page<User> userPages = userRepository.findAll(new UserSpecification(userFilterPattern), userFilterPattern.toPageRequest());
+
+        return new PageImpl<>(
+                userPages.stream().map(userMapper::toModel).toList(),
+                userFilterPattern.toPageRequest(),
+                userPages.getTotalPages()
+        );
     }
 
     @Override

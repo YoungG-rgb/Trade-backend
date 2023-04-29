@@ -18,4 +18,12 @@ public class SpecificationHelper {
                 criteriaBuilder.lower(root.get(fieldName)), getContainsLikePattern(filterByField)
         );
     }
+
+    public static boolean isEmpty(final CharSequence charSequence) {
+        return charSequence == null || charSequence.length() == 0;
+    }
+
+    public static boolean isNotEmpty(final CharSequence charSequence) {
+        return !isEmpty(charSequence);
+    }
 }

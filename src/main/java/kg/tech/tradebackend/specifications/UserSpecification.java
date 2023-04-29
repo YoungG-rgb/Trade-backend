@@ -12,6 +12,8 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static kg.tech.tradebackend.utils.SpecificationHelper.isNotEmpty;
+
 @AllArgsConstructor
 public class UserSpecification implements Specification<User> {
 
@@ -21,7 +23,7 @@ public class UserSpecification implements Specification<User> {
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         final List<Predicate> predicates = new ArrayList<>();
 
-        if (userFilterPattern.getUsernameOrEmail() != null) {
+        if (isNotEmpty(userFilterPattern.getUsernameOrEmail())) {
             predicates.add(
                     criteriaBuilder.like( criteriaBuilder.lower( criteriaBuilder.concat( root.get("username"), root.get("email") ) ),
                             SpecificationHelper.getContainsLikePattern(userFilterPattern.getUsernameOrEmail())
@@ -29,12 +31,12 @@ public class UserSpecification implements Specification<User> {
             );
         }
 
-        if (userFilterPattern.getPhoneNumber() != null) {
+        if (isNotEmpty(userFilterPattern.getPhoneNumber())) {
             Join<Phone, User> phoneUserJoin = root.join("phones");
             predicates.add( criteriaBuilder.like( phoneUserJoin.get("number"), userFilterPattern.getPhoneNumber()) );
         }
 
-        if (userFilterPattern.getTown() != null) {
+        if (isNotEmpty(userFilterPattern.getTown())) {
             Join<Address, User> addressUserJoin = root.join("address");
             predicates.add( criteriaBuilder.like( addressUserJoin.get("town"), userFilterPattern.getTown() ) );
         }

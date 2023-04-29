@@ -1,31 +1,26 @@
 <div class="container-fluid">
-<!--    <div class="col-md-12">-->
-<!--        <form id="searchQrGroupForm" th:object="${}" method="post"><br>-->
-<!--            <div class="row">-->
-<!--                <div class="col-4">-->
-<!--                    <input type="text" class="form-control" placeholder="Имя" th:field="*{name}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <input type="text" class="form-control" placeholder="Код группы" th:field="*{code}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="isActive">Выберите:</label>-->
-<!--                    <select name="isActive" id="isActive" th:field="*{isActive}">-->
-<!--                        <option value="all">Все</option>-->
-<!--                        <option value="true">Активные</option>-->
-<!--                        <option value="false">Неактивные</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--                <br><br>-->
-<!--                <div class="col-4">-->
-<!--                    <button id="reloadFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
+    <div class="col-md-12">
+        <form id="searchUserForm" th:object="${userFilterPattern}" method="post"><br>
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control" placeholder="Имя или email" th:field="*{usernameOrEmail}">
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control" placeholder="Город" th:field="*{town}">
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control" placeholder="Номер телефона" th:field="*{phoneNumber}">
+                </div>
+                <br><br>
+                <div class="col-4">
+                    <button id="reloadFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>
+                </div>
+                <div class="col-4">
 
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
+                </div>
+            </div>
+        </form>
+    </div>
     <br>
     <div class="row">
         <div class="col-9">
@@ -36,13 +31,14 @@
         </div>
     </div>
 
-    <table id="qrGroup-table" class="table table-hover table-bordered" data-order='[[0, "desc"]]'>
+    <table id="users-table" class="table table-hover table-bordered" data-order='[[0, "desc"]]'>
         <thead>
         <tr>
             <th>Имя</th>
-            <th>Код группы</th>
-            <th>Qr коды</th>
-            <th>Актуально</th>
+            <th>email</th>
+            <th>Баланс</th>
+            <th>Город</th>
+            <th>Номер телефона</th>
             <th>Действия</th>
         </tr>
         </thead>

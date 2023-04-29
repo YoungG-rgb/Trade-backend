@@ -9,8 +9,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserFilterPattern extends DatatablePaginationCriteria {
-    String usernameOrEmail;
-    String town;
-    String phoneNumber;
+public class RoleFilterPattern extends DatatablePaginationCriteria {
+    String name;
 }

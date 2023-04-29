@@ -1,5 +1,7 @@
-package kg.tech.tradebackend.controllers;
+package kg.tech.tradebackend.controllers.admin;
 
+import kg.tech.tradebackend.domain.filterPatterns.RoleFilterPattern;
+import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ public class AdminController {
     @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("authenticatedUsername", SecurityUtils.getAuthenticatedUsername());
+        model.addAttribute("userFilterPattern", new UserFilterPattern());
+        model.addAttribute("roleFilterPattern", new RoleFilterPattern());
         return "dashboard";
     }
 }
