@@ -54,14 +54,47 @@
                         </button>
                     </div>
                     <div class="container modal-body">
+                        <div class="form-group ">
+                            <label for="roleName">Название роли:</label>
+                            <input type="text" class="form-control" id="roleName" name="roleName">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-success" id="addNewQrGroupButton" >Добавить</button>
+                            <button type="button" class="btn btn-success" id="addNewRoleButton" onclick="addNewRole()">Добавить</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div id="rolesEditForm" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Редактирование Роли</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body">
+                        <div class="form-group ">
+                            <label for="rolesEditId">Id:</label>
+                            <input disabled type="text" class="form-control" id="rolesEditId" name="rolesEditId">
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="roleEditName">Название роли:</label>
+                            <input type="text" class="form-control" id="roleEditName" name="roleEditName">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="button" class="btn btn-success" id="editRoleButton" >Изменить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

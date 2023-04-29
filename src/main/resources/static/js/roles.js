@@ -1,3 +1,6 @@
+const rolesAddForm = $('#rolesAddForm');
+const rolesEditForm = $('#rolesEditForm')
+
 // load all roles
 $(document).ready(() => {
     $('#reloadRolesFilterButton').click(function (e) {
@@ -37,17 +40,65 @@ function initRolesTable() {
 
 function formatActionForAuditableColumns(data, type, row) {
     return `<td>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#groupInfoForm"
-                onclick="loadAndShowModalInfoForm(${row['id']})">
-                    <i class="bi bi-info-circle"></i>
+                <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#rolesEditForm"
+                onclick="loadAndShowRoleEditForm(${row['id']})"> <i class="bi bi-pencil-square"></i> 
                 </button>
 
-                <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#groupEditForm"
-                onclick="loadAndShowModalEditForm(${row['id']})"> <i class="bi bi-pencil-square"></i> 
-                </button>
-
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#groupDeleteForm"
-                    onclick="loadAndShowDeleteModal(${row['id']})"> <i class="bi bi-trash3"></i>
-                </button>
+                <button type="button" class="btn btn-danger" onclick="deleteRole(${row['id']})"> <i class="bi bi-trash3"></i> </button>
             </td>`
+}
+function addNewRole() {
+    let roleName = rolesAddForm.find('#roleName').val();
+    let roleId = rolesAddForm.find('#rolesId').val();
+
+    fetch(new Request('/admin/roles', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                'id' : roleId,
+                'name' : roleName
+            })
+        })
+    ).then(resp => {
+        if (resp.ok) {
+            $('#roles-table').DataTable().ajax.reload()
+            rolesAddForm.modal('hide')
+        } else {
+            alert('Ошибка')
+        }
+    })
+}
+function deleteRole(id) {
+    fetch(new Request('/admin/roles/' + id, { method: 'DELETE', headers: {'content-type': 'application/json'}}))
+        .then(function () {
+            $('#roles-table').DataTable().ajax.reload()
+        });
+}
+function loadAndShowRoleEditForm(id) {
+    fetch('/admin/roles/' + id, {method: 'GET'})
+        .then(function (response) {
+            response.json().then(function (role) {
+                rolesEditForm.find('#rolesEditId').val(id);
+                rolesEditForm.find('#roleEditName').val(role.name);
+
+                $(document.getElementById('editRoleButton')).on('click', async function () {
+                    fetch(new Request('/admin/roles', {
+                        method: 'PUT',
+                        headers: {'content-type': 'application/json'},
+                        body: JSON.stringify({
+                            'id': rolesEditForm.find('#rolesEditId').val(),
+                            'name': rolesEditForm.find('#roleEditName').val(),
+                        })
+                    })).then(resp => {
+                        if (resp.ok) {
+                            $('#roles-table').DataTable().ajax.reload()
+                            rolesEditForm.modal('hide')
+                        } else {
+                            alert('Ошибка')
+                            throw Error('Что-то пошло не так: ' + resp.status)
+                        }
+                    })
+                });
+            })
+        })
 }
