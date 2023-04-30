@@ -1,8 +1,6 @@
 package kg.tech.tradebackend.domain.entities;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,6 +10,8 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role implements GrantedAuthority {
 
@@ -28,5 +28,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return name;
+    }
+
+    public Role(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }

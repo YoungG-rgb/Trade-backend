@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/roles")
 @RequiredArgsConstructor
@@ -17,6 +19,11 @@ public class RoleController {
     @PostMapping("/filter")
     public ResponseEntity<DataTablePage<RoleModel>> getAll(@RequestBody RoleFilterPattern roleFilterPattern) {
         return ResponseEntity.ok(new DataTablePage<>(roleFilterPattern, roleService.filter(roleFilterPattern)));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RoleModel>> getRolesWithoutPageable(){
+        return ResponseEntity.ok(roleService.getRoles());
     }
 
     @GetMapping("/{id}")

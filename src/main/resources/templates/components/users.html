@@ -13,7 +13,7 @@
                 </div>
                 <br><br>
                 <div class="col-4">
-                    <button id="reloadFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>
+                    <button id="reloadUserFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>
                 </div>
                 <div class="col-4">
 
@@ -50,23 +50,87 @@
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Добавление пользователя</h5>
+                        <h5 class="modal-title" id="addUserModalLabel">Добавление пользователя</h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="container modal-body">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-success" id="addNewQrGroupButton" >Добавить</button>
+                        <div class="form-group ">
+                            <label for="username">Имя пользователя:</label>
+                            <input type="text" class="form-control" id="username" name="username">
                         </div>
+
+                        <div class="form-group ">
+                            <label for="mail">Mail:</label>
+                            <input type="text" class="form-control" id="mail" name="mail">
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="password">Пароль:</label>
+                            <input type="text" class="form-control" id="password" name="password">
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="balance">Баланс:</label>
+                            <input type="text" class="form-control" id="balance" name="balance">
+                        </div>
+
+                        <div>
+                            <p style="color: black">Роль</p>
+                            <select id="selectedRoles" multiple required size="3">
+                                <div th:each="role : ${AllRoles}">
+                                    <option th:text="${role.getName()}" th:value="${role.getId()}"></option>
+                                </div>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-success" onclick="addNewUserForm()">Добавить</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div>
+        <div id="userEditForm" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalLabel">Редактирование пользователя</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body">
+                        <div class="form-group ">
+                            <label for="idUserEdit">Id пользователя:</label>
+                            <input disabled type="text" class="form-control" id="idUserEdit" name="idUserEdit">
+                        </div>
 
+                        <div class="form-group ">
+                            <label for="usernameEdit">Имя пользователя:</label>
+                            <input type="text" class="form-control" id="usernameEdit" name="usernameEdit">
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="mailEdit">Mail:</label>
+                            <input type="text" class="form-control" id="mailEdit" name="mailEdit">
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="balanceEdit">Баланс:</label>
+                            <input type="text" class="form-control" id="balanceEdit" name="balanceEdit">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-success" id="editUserButton">Обновить</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

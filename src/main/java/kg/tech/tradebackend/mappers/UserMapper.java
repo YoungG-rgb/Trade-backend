@@ -1,9 +1,14 @@
 package kg.tech.tradebackend.mappers;
 
+import kg.tech.tradebackend.domain.entities.Role;
 import kg.tech.tradebackend.domain.entities.User;
+import kg.tech.tradebackend.domain.models.RoleModel;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.domain.models.UserRegisterModel;
 import org.mapstruct.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(uses = {RoleMapper.class, CardMapper.class, PhoneMapper.class,
         CouponMapper.class, AddressMapper.class, OrderMapper.class}

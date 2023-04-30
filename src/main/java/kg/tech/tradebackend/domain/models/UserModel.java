@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserModel {
     Long id;
