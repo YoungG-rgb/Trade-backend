@@ -39,6 +39,6 @@ public class UserController extends BaseController {
 
     @PutMapping
     public ResponseEntity<UserModel> update(@RequestBody UserModel userModel) throws Exception {
-        return ResponseEntity.ok(userService.update(userModel));
+        return ResponseEntity.ok(userService.adminUpdate(userModel));
     }
 }

@@ -27,4 +27,10 @@ public interface UserMapper {
 
     @Mapping(target = "roleModels", source = "roles")
     UserRegisterModel toRegisterModel(User user);
+
+    default void adminUpdate(User user, UserModel userModel) {
+        user.setUsername(userModel.getUsername());
+        user.setEmail(userModel.getEmail());
+        user.setBalance(userModel.getBalance());
+    }
 }

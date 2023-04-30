@@ -76,7 +76,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel update(UserModel userModel) throws TradeException {
         if (userModel.getId() == null) throw new TradeException ("ID is null");
-        return this.save(userModel);
+
+        User user = userRepository.save(userMapper.toEntity(userModel));
+        return userMapper.toModel(user);
+    }
+
+    @Override
+    public UserModel adminUpdate(UserModel userModel) throws Exception {
+        User userFromDb = userRepository.findById(userModel.getId()).orElseThrow(() -> new TradeException("ID is null"));
+        userMapper.adminUpdate(userFromDb, userModel);
+        return userMapper.toModel(userRepository.save(userFromDb));
     }
 
     @Override
