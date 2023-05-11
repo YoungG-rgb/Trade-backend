@@ -49,10 +49,7 @@ public class Item {
     @Column(columnDefinition = "boolean default true")
     boolean isActive;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(cascade = CascadeType.ALL)
     List<Image> images;
 
     public Item(String name, BigDecimal price, Integer count, Double rating, Color dialColor, String glass, String waterResistance, String straps, int standardBatteryLife, String description, boolean isActive, List<Image> images) {

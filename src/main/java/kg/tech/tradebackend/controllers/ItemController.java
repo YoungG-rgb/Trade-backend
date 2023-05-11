@@ -21,19 +21,4 @@ public class ItemController extends BaseController {
         return successResponse(itemService.filter(searchPattern, pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseModel<ItemModel> getById(@PathVariable("id") Long id) throws Exception {
-        return successResponse(itemService.findById(id));
-    }
-
-    @PostMapping
-    public ResponseModel<ItemModel> save(@RequestBody ItemModel itemModel) {
-        return successResponse(itemService.save(itemModel));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseModel<String> delete(@PathVariable Long id) throws Exception {
-        itemService.delete(id);
-        return successResponse("DELETED");
-    }
 }

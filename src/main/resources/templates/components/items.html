@@ -1,26 +1,26 @@
 <div class="container-fluid">
-<!--  <div class="col-md-12">-->
-<!--    <form id="searchRoleForm" th:object="${roleFilterPattern}" method="post"><br>-->
-<!--      <div class="row">-->
-<!--        <div class="col-4">-->
-<!--          <input type="text" class="form-control" placeholder="Название роли" th:field="*{name}">-->
-<!--        </div>-->
-<!--        <div class="col-4">-->
+  <div class="col-md-12">
+    <form id="searchItemForm" th:object="${itemFilterPattern}" method="post"><br>
+      <div class="row">
+        <div class="col-4">
+          <input type="text" class="form-control" placeholder="Название товара" th:field="*{name}">
+        </div>
+        <div class="col-4">
 
-<!--        </div>-->
-<!--        <div class="col-4">-->
+        </div>
+        <div class="col-4">
 
-<!--        </div>-->
-<!--        <br><br>-->
-<!--        <div class="col-4">-->
-<!--          <button id="reloadRolesFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>-->
-<!--        </div>-->
-<!--        <div class="col-4">-->
+        </div>
+        <br><br>
+        <div class="col-4">
+          <button id="reloadItemsFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>
+        </div>
+        <div class="col-4">
 
-<!--        </div>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
+        </div>
+      </div>
+    </form>
+  </div>
   <br>
 
   <div class="row">
@@ -32,9 +32,10 @@
     </div>
   </div>
 
-  <table id="items-table" class="table table-hover table-bordered" data-order='[[0, "desc"]]'>
+  <table id="items-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
     <thead>
     <tr>
+      <th>Id</th>
       <th>Название</th>
       <th>Количество</th>
       <th>Описание</th>
@@ -45,10 +46,154 @@
       <th>Батарея</th>
       <th>Ремень</th>
       <th>Водостойкость</th>
+      <th>Действия</th>
     </tr>
     </thead>
     <tbody></tbody>
   </table>
 
+  <div>
+    <div id="itemAddForm" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addItemModalLabel">Добавление Продукта</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="container modal-body">
+            <div class="form-group ">
+              <label for="itemName">Название продукта:</label>
+              <input type="text" class="form-control" id="itemName" name="itemName">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemCount">Количество:</label>
+              <input type="text" class="form-control" id="itemCount" name="itemCount">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemDescription">Описание:</label>
+              <input type="text" class="form-control" id="itemDescription" name="itemDescription">
+            </div>
+
+            <div>
+              <p style="color: black">Цвет</p>
+              <select id="selectedColors" multiple required size="3">
+                <div th:each="color : ${allColors}">
+                  <option th:text="${color.name}" th:value="${color.name}"></option>
+                </div>
+              </select>
+            </div>
+
+            <div class="form-group ">
+              <label for="itemGlass">Стекло:</label>
+              <input type="text" class="form-control" id="itemGlass" name="itemGlass">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemPrice">Цена:</label>
+              <input type="text" class="form-control" id="itemPrice" name="itemPrice">
+            </div>
+
+            <div class="form-group ">
+              <label for="rating">Рейтинг:</label>
+              <input type="text" class="form-control" id="rating" name="rating">
+            </div>
+
+            <div class="form-group ">
+              <label for="batteryItem">Батарея:</label>
+              <input type="text" class="form-control" id="batteryItem" name="batteryItem">
+            </div>
+
+            <div class="form-group ">
+              <label for="straps">Ремешок:</label>
+              <input type="text" class="form-control" id="straps" name="straps">
+            </div>
+
+            <div class="form-group ">
+              <label for="waterResistance">Водостойкость:</label>
+              <input type="text" class="form-control" id="waterResistance" name="waterResistance">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-success" id="addNewItemButton" onclick="addNewItem()">Добавить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="itemEditForm" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editItemModalLabel">Редактирование Продукта</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="container modal-body">
+            <div class="form-group ">
+              <label for="itemEditId">Id:</label>
+              <input type="text" class="form-control" id="itemEditId" name="itemEditId" disabled>
+            </div>
+
+            <div class="form-group ">
+              <label for="itemEditName">Название продукта:</label>
+              <input type="text" class="form-control" id="itemEditName" name="itemEditName">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemEditCount">Количество:</label>
+              <input type="text" class="form-control" id="itemEditCount" name="itemEditCount">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemEditDescription">Описание:</label>
+              <input type="text" class="form-control" id="itemEditDescription" name="itemEditDescription">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemEditGlass">Стекло:</label>
+              <input type="text" class="form-control" id="itemEditGlass" name="itemEditGlass">
+            </div>
+
+            <div class="form-group ">
+              <label for="itemEditPrice">Цена:</label>
+              <input type="text" class="form-control" id="itemEditPrice" name="itemEditPrice">
+            </div>
+
+            <div class="form-group ">
+              <label for="ratingEdit">Рейтинг:</label>
+              <input type="text" class="form-control" id="ratingEdit" name="ratingEdit">
+            </div>
+
+            <div class="form-group ">
+              <label for="batteryItemEdit">Батарея:</label>
+              <input type="text" class="form-control" id="batteryItemEdit" name="batteryItemEdit">
+            </div>
+
+            <div class="form-group ">
+              <label for="strapsEdit">Ремешок:</label>
+              <input type="text" class="form-control" id="strapsEdit" name="strapsEdit">
+            </div>
+
+            <div class="form-group ">
+              <label for="waterResistanceEdit">Водостойкость:</label>
+              <input type="text" class="form-control" id="waterResistanceEdit" name="waterResistanceEdit">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-success" id="editItemButton"> Редактировать</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

@@ -1,5 +1,7 @@
 package kg.tech.tradebackend.controllers.admin;
 
+import kg.tech.tradebackend.domain.enums.Color;
+import kg.tech.tradebackend.domain.filterPatterns.ItemFilterPattern;
 import kg.tech.tradebackend.domain.filterPatterns.RoleFilterPattern;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.services.RoleService;
@@ -21,7 +23,9 @@ public class AdminController {
         model.addAttribute("authenticatedUsername", SecurityUtils.getAuthenticatedUsername());
         model.addAttribute("userFilterPattern", new UserFilterPattern());
         model.addAttribute("roleFilterPattern", new RoleFilterPattern());
+        model.addAttribute("itemFilterPattern", new ItemFilterPattern());
         model.addAttribute("AllRoles", roleService.getRoles());
+        model.addAttribute("allColors", Color.values());
         return "dashboard";
     }
 }

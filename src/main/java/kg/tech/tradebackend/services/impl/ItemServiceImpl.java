@@ -11,6 +11,7 @@ import kg.tech.tradebackend.specifications.ItemSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +64,15 @@ public class ItemServiceImpl implements ItemService {
         return items.map(itemMapper::toModel);
     }
 
+    @Override
+    public Page<ItemModel> filter(ItemFilterPattern searchPattern) {
+        ItemSpecification itemSpecification = new ItemSpecification(searchPattern);
+        Page<Item> itemPages = itemRepository.findAll(itemSpecification, searchPattern.toPageRequest());
 
+        return new PageImpl<>(
+                itemPages.stream().map(itemMapper::toModel).toList(),
+                searchPattern.toPageRequest(),
+                itemPages.getTotalPages()
+        );
+    }
 }

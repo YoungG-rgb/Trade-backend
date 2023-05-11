@@ -19,4 +19,5 @@ public interface ItemService {
     void delete(Long id) throws Exception;
 
     Page<ItemModel> filter(ItemFilterPattern searchPattern, Pageable pageable);
+    Page<ItemModel> filter(ItemFilterPattern searchPattern);
 }

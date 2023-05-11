@@ -1,5 +1,4 @@
 const $_BASE_ROOT_URL = /*[[@{/}]]*/ '/';
-const { userAddForm } = document.forms;
 const userAddModal = $('#userAddForm')
 const userEditModal = $('#userEditForm')
 
@@ -119,6 +118,7 @@ function addNewUserForm() {
         if (resp.ok) {
             $('#users-table').DataTable().ajax.reload()
             userAddModal.modal('hide')
+            const { userAddForm } = document.forms;
             userAddForm.reset();
         } else {
             alert('Ошибка')
