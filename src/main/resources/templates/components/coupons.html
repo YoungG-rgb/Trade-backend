@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="col-md-12">
+        <form id="searchCouponsForm" th:object="${couponFilterPattern}" method="post"><br>
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" class="form-control" placeholder="Код" th:field="*{uuid}">
+                </div>
+                <div class="col-4">
+
+                </div>
+                <div class="col-4">
+
+                </div>
+                <br><br>
+                <div class="col-4">
+                    <button id="reloadCouponsFilterButton" class="btn btn-primary" style="margin-top: 30px;">Фильтровать</button>
+                </div>
+                <div class="col-4">
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-10">
+            <h2>Список всех купонов</h2><br>
+        </div>
+        <div class="col-2">
+            <button data-toggle="modal" data-target="#couponsAddForm" class="btn btn-success">Добавить купон</button>
+        </div>
+    </div>
+
+    <table id="coupons-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Код</th>
+            <th>Бонус</th>
+            <th>Активность</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div>
+        <div id="couponsAddForm" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalCouponLabel">Добавление Купона</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body">
+                        <div class="form-group ">
+                            <label for="bonusCoupon">Бонус:</label>
+                            <input type="text" class="form-control" id="bonusCoupon" name="bonusCoupon">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="button" class="btn btn-success" id="addNewCouponButton" onclick="addNewCoupon()">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
