@@ -7,59 +7,124 @@
 
         </div>
     </div>
+    <br>
 
     <div>
-        <div id="rolesAddForm" class="modal fade" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Добавление Роли</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="container modal-body">
-                        <div class="form-group ">
-                            <label for="roleName">Название роли:</label>
-                            <input type="text" class="form-control" id="roleName" name="roleName">
-                        </div>
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email адрес</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Эмейл адрес" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">Мы никогда не будем делиться вашей электронной почтой с кем-либо еще.</small>
+            </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-success" id="addNewRoleButton" onclick="addNewRole()">Добавить</button>
+            <div class="form-group">
+                <label for="login">Логин</label>
+                <input type="password" class="form-control" id="login">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Пароль</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+
+            <div class="form-group">
+                <label>Баланс</label>
+                <div class="input-group-append">
+                    <input type="text" class="form-control" placeholder="Баланс" id="prof_balance">
+                    <span class="input-group-text">сом</span>
+                </div>
+            </div>
+
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="bi bi-broadcast-pin"></i> Адрес
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="number" id="address_id" hidden>
+                                <label for="address_town">Город</label>
+                                <input type="text" class="form-control" id="address_town">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address_street">Улица</label>
+                                <input type="text" class="form-control" id="address_street">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address_houseNumber">Номер дома</label>
+                                <input type="text" class="form-control" id="address_houseNumber">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address_houseType">Тип дома</label>
+                                <input type="text" class="form-control" id="address_houseType">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="bi bi-credit-card"></i> Кредитная карта
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="card_id" hidden>
+                                <label for="card_number">Номер карты</label>
+                                <input type="text" class="form-control" id="card_number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="card_expiryDate">Срок истечения карты</label>
+                                <input type="date" class="form-control" id="card_expiryDate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="card_cvc">Cvc Cvv</label>
+                                <input type="text" class="form-control" id="card_cvc">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="bi bi-telephone-inbound-fill"></i> Номер телефона
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <table id="phones-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
+                                <thead>
+                                <tr>
+                                    <th>Номер</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="rolesEditForm" class="modal fade" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog ">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Редактирование Роли</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="container modal-body">
-                        <div class="form-group ">
-                            <label for="rolesEditId">Id:</label>
-                            <input disabled type="text" class="form-control" id="rolesEditId" name="rolesEditId">
-                        </div>
-
-                        <div class="form-group ">
-                            <label for="roleEditName">Название роли:</label>
-                            <input type="text" class="form-control" id="roleEditName" name="roleEditName">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-success" id="editRoleButton" >Изменить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Изменить</button>
+        </form>
     </div>
 </div>
