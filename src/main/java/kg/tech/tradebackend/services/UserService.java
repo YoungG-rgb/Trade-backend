@@ -16,6 +16,6 @@ public interface UserService extends UserDetailsService{
     UserModel adminUpdate(UserModel userModel) throws Exception;
     void delete(Long id) throws Exception;
 
-
+    UserModel findByUsername(String username);
 
 }

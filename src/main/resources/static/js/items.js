@@ -31,6 +31,7 @@ function initItemsTable() {
         columns: [
             {data: 'id', orderable: true},
             {data: 'name', orderable: true},
+            {data: 'imageModels', render: convertPhoto, orderable: false},
             {data: 'count', orderable: true},
             {data: 'description', orderable: false},
             {data: 'dialColor', orderable: false},
@@ -55,6 +56,16 @@ function formatActionForItemsColumns(data, type, row){
             </td>`
 }
 
+function convertPhoto(data, type, row) {
+    debugger;
+    if (row.imageModels.length === 0) {
+        return `<td>empty</td>`
+    } else {
+        return `<td>
+                <img class="d-block w-100" src="data:image/png;base64,${data.picture}"  alt="empty">
+            </td>`
+    }
+}
 
 function addNewItem(){
     let itemColor;

@@ -26,7 +26,6 @@ function initUsersTable() {
             "dataType": 'json',
             "data": function (d) {
                 let extendedData = $("#searchUserForm").serializeAllJson()
-                debugger;
                 let searchData = $.extend({}, d, extendedData);
                 return JSON.stringify(searchData)
             }

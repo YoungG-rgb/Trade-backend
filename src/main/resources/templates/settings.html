@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройки</title>
+    <div th:replace="fragments/links.html"></div>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="sidebar-mini" style="height: auto">
+    <div class="wrapper">
+        <!-- HEADER -->
+        <div th:replace="fragments/header.html"></div>
+
+        <!-- SIDEBAR -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition">
+                <div class="os-resize-observer-host observed">
+                    <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
+                </div>
+                <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
+                    <div class="os-resize-observer"></div>
+                </div>
+                <div class="os-content-glue" style="margin: 0px -8px; width: 249px; height: 394px;"></div>
+                <div class="os-padding">
+                    <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
+                        <div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+                            <!-- USER LOGO -->
+                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                <div class="image">
+                                    <img src="/images/avatar5.png" class="img-circle elevation-2" alt="User Image">
+                                </div>
+                                <div class="info">
+                                    <a href="index" class="d-block">
+                                        <p th:text="${authenticatedUsername}"></p>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- NAV ITEMS -->
+                            <nav class="mt-2">
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                     aria-orientation="vertical">
+                                    <!-- TABLES -->
+                                    <button class="nav-link active btn-outline-secondary" id="v-pills-profile-tab" data-toggle="pill"
+                                            data-target="#v-pills-profile" type="button"
+                                            role="tab" aria-controls="v-pills-profile" aria-selected="false"
+                                            style="color: white">
+                                        <i class="bi bi-person-gear"></i> Профиль
+                                    </button>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrolling">
+                    <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+                        <div class="os-scrollbar-track">
+                            <div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div>
+                        </div>
+                    </div>
+                    <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
+                        <div class="os-scrollbar-track">
+                            <div class="os-scrollbar-handle"
+                                 style="height: 29.0655%; transform: translate(0px, 68.1006px);"></div>
+                        </div>
+                    </div>
+                    <div class="os-scrollbar-corner"></div>
+                </div>
+            </div>
+        </aside>
+        <!-- SIDEBAR -->
+
+        <!-- SECTION CONTENT -->
+        <div class="content-wrapper" style="min-height: 338px;">
+            <br>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <!-- FOR USERS -->
+                                <div class="tab-pane active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    <div th:replace="components/profile.html"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/scripts.html"></div>
+</body>
+</html>

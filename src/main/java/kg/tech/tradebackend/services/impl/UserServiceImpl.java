@@ -99,4 +99,12 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("USERNAME IS NULL"));
     }
+
+    @Override
+    public UserModel findByUsername(String username) {
+        return userMapper.toModel(
+                userRepository.findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("USERNAME IS NULL"))
+        );
+    }
 }
