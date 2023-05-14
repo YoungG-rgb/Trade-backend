@@ -1,5 +1,6 @@
 package kg.tech.tradebackend.services;
 
+import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.domain.models.UserRegisterModel;
@@ -12,7 +13,8 @@ public interface UserService extends UserDetailsService{
     Page<UserModel> filter(UserFilterPattern userFilterPattern);
     UserModel save(UserModel user);
     UserRegisterModel save(UserRegisterModel user) throws Exception;
-    UserModel update(UserModel userModel) throws Exception;
+    String update(UserModel userModel) throws Exception;
+    UserModel updateWithoutEncode(UserModel userModel) throws TradeException;
     UserModel adminUpdate(UserModel userModel) throws Exception;
     void delete(Long id) throws Exception;
 

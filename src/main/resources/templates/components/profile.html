@@ -10,27 +10,31 @@
     <br>
 
     <div>
-        <form>
+        <form id="profileForm" >
+            <input type="number" th:value="${user.id}" id="user-id" hidden>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email адрес</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Эмейл адрес" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Эмейл адрес" aria-describedby="emailHelp" th:value="${user.email}">
                 <small id="emailHelp" class="form-text text-muted">Мы никогда не будем делиться вашей электронной почтой с кем-либо еще.</small>
             </div>
 
             <div class="form-group">
                 <label for="login">Логин</label>
-                <input type="password" class="form-control" id="login">
+                <input type="text" class="form-control" id="login" th:value="${user.username}">
             </div>
 
             <div class="form-group">
                 <label for="exampleInputPassword1">Пароль</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите заново пароль">
+                <input type="text" class="form-control" id="updatedAt" th:value="${user.updatedAt}" hidden>
+                <input type="text" class="form-control" id="createdAt" th:value="${user.createdAt}" hidden>
             </div>
 
             <div class="form-group">
                 <label>Баланс</label>
                 <div class="input-group-append">
-                    <input type="text" class="form-control" placeholder="Баланс" id="prof_balance">
+                    <input type="text" class="form-control" readonly
+                           placeholder="Баланс" id="prof_balance" th:value="${user.balance}">
                     <span class="input-group-text">сом</span>
                 </div>
             </div>
@@ -48,24 +52,30 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             <div class="form-group">
-                                <input type="number" id="address_id" hidden>
+                                <input type="number" id="address_id" hidden
+                                       th:value="${user.addressModel ne null && user.addressModel.id != null ? user.addressModel.id : ''}">
+
                                 <label for="address_town">Город</label>
-                                <input type="text" class="form-control" id="address_town">
+                                <input type="text" class="form-control" id="address_town"
+                                       th:value="${user.addressModel ne null && user.addressModel.town != null ? user.addressModel.town : ''}">
                             </div>
 
                             <div class="form-group">
                                 <label for="address_street">Улица</label>
-                                <input type="text" class="form-control" id="address_street">
+                                <input type="text" class="form-control" id="address_street"
+                                       th:value="${user.addressModel ne null && user.addressModel.street != null ? user.addressModel.street : ''}">
                             </div>
 
                             <div class="form-group">
                                 <label for="address_houseNumber">Номер дома</label>
-                                <input type="text" class="form-control" id="address_houseNumber">
+                                <input type="text" class="form-control" id="address_houseNumber"
+                                       th:value="${user.addressModel ne null && user.addressModel.houseNumber != null ? user.addressModel.houseNumber : ''}">
                             </div>
 
                             <div class="form-group">
                                 <label for="address_houseType">Тип дома</label>
-                                <input type="text" class="form-control" id="address_houseType">
+                                <input type="text" class="form-control" id="address_houseType"
+                                       th:value="${user.addressModel ne null && user.addressModel.houseType != null ? user.addressModel.houseType : ''}">
                             </div>
                         </div>
                     </div>
@@ -82,19 +92,28 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                         <div class="card-body">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="card_id" hidden>
+                                <input type="text" class="form-control" id="card_id" hidden
+                                       th:value="${user.creditCardModel ne null && user.creditCardModel.id ne null ?
+                                       user.creditCardModel.id : ''}">
+
                                 <label for="card_number">Номер карты</label>
-                                <input type="text" class="form-control" id="card_number">
+                                <input type="text" class="form-control" id="card_number"
+                                       th:value="${user.creditCardModel ne null && user.creditCardModel.cardNumber ne null ?
+                                       user.creditCardModel.cardNumber : ''}">
                             </div>
 
                             <div class="form-group">
                                 <label for="card_expiryDate">Срок истечения карты</label>
-                                <input type="date" class="form-control" id="card_expiryDate">
+                                <input type="date" class="form-control" id="card_expiryDate"
+                                       th:value="${user.creditCardModel ne null && user.creditCardModel.expiryDate ne null ?
+                                       user.creditCardModel.expiryDate : ''}">
                             </div>
 
                             <div class="form-group">
                                 <label for="card_cvc">Cvc Cvv</label>
-                                <input type="text" class="form-control" id="card_cvc">
+                                <input type="text" class="form-control" id="card_cvc"
+                                       th:value="${user.creditCardModel ne null && user.creditCardModel.expiryDate ne null ?
+                                       user.creditCardModel.expiryDate : ''}">
                             </div>
                         </div>
                     </div>
@@ -110,21 +129,26 @@
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                         <div class="card-body">
-                            <table id="phones-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
+                            <table id="phones-table" class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Номер</th>
-                                    <th>Действия</th>
                                 </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    <tr data-th-each="phone : ${user.phoneModels}" >
+                                        <td data-th-text="${phone.number}"></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <input type="text" id="newUserNumber" placeholder="Введите новый номер">
+            <button type="button" class="btn btn-success" onclick="addNewNumber()">Добавить новый номер</button>
 
-            <button type="submit" class="btn btn-primary">Изменить</button>
+            <button type="submit" class="btn btn-primary" onclick="updateProfile()">Изменить</button>
         </form>
     </div>
 </div>

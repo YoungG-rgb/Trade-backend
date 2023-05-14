@@ -1,5 +1,6 @@
 package kg.tech.tradebackend.domain.entities;
 
+import kg.tech.tradebackend.domain.models.CardModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,10 @@ public class Card {
 
     String cvcAndCvv;
 
+    public Card(CardModel cardModel) {
+        this.id = cardModel.getId();
+        this.cardNumber = cardModel.getCardNumber();
+        this.expiryDate = cardModel.getExpiryDate();
+        this.cvcAndCvv = cardModel.getCvcAndCvv();
+    }
 }

@@ -1,6 +1,7 @@
 package kg.tech.tradebackend.domain.entities;
 
 import kg.tech.tradebackend.domain.enums.HouseType;
+import kg.tech.tradebackend.domain.models.AddressModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -27,4 +28,12 @@ public class Address {
 
     @Enumerated(EnumType.STRING)
     HouseType houseType;
+
+    public Address(AddressModel addressModel) {
+        this.id = addressModel.getId();
+        this.town = addressModel.getTown();
+        this.street = addressModel.getStreet();
+        this.houseNumber = addressModel.getHouseNumber();
+        this.houseType = HouseType.valueOf(addressModel.getHouseType());
+    }
 }

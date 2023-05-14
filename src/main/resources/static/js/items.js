@@ -57,7 +57,6 @@ function formatActionForItemsColumns(data, type, row){
 }
 
 function convertPhoto(data, type, row) {
-    debugger;
     if (row.imageModels.length === 0) {
         return `<td>empty</td>`
     } else {
