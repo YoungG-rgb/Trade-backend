@@ -75,6 +75,19 @@ function addNewItem(){
         }
     }
 
+    let image = $('#imageModel')[0].files[0];
+    let imageModels = []
+
+    if (image !== undefined) {
+        let imageModel = {
+            id: null,
+            picture: imageToBinary(image),
+            isMain: true
+        }
+        imageModels.push(imageModel)
+    }
+
+    debugger;
     fetch(new Request('/admin/items', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
@@ -89,6 +102,7 @@ function addNewItem(){
                 'standardBatteryLife' : itemsAddForm.find('#batteryItem').val(),
                 'straps' : itemsAddForm.find('#straps').val(),
                 'waterResistance' : itemsAddForm.find('#waterResistance').val(),
+                'imageModels' : imageModels
             })
         })
     ).then(resp => {
@@ -153,4 +167,26 @@ function loadAndShowItemEditForm(id) {
                 });
             })
         })
+}
+
+function imageToBinary(image) {
+    let reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onloadend = function () {
+        let data = (reader.result).split(',')[1];
+        let binaryBlob = atob(data);
+        localStorage.setItem("image", binaryBlob)
+    }
+    let imageBase64 = localStorage.getItem("image")
+    return base64ToBinary(imageBase64)
+}
+
+function base64ToBinary(imageBase64) {
+    let bytes = [];
+    for (let i = 0; i < imageBase64.length; i++) {
+        bytes.push(
+            imageBase64.charCodeAt(i)
+        );
+    }
+    return bytes
 }
