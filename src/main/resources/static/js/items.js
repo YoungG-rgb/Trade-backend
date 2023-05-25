@@ -61,7 +61,7 @@ function convertPhoto(data, type, row) {
         return `<td>empty</td>`
     } else {
         return `<td>
-                <img class="d-block w-100" src="data:image/png;base64,${data.picture}"  alt="empty">
+                <img style="width: 337px; height: 320px" src="data:image/png;base64,${data[0].picture}"  alt="empty">
             </td>`
     }
 }
