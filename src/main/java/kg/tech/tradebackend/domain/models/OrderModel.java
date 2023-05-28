@@ -2,6 +2,7 @@ package kg.tech.tradebackend.domain.models;
 
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.enums.PaymentMethod;
+import kg.tech.tradebackend.domain.enums.Transport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class OrderModel {
 
     List<ItemModel> items;
     PaymentMethod paymentMethod;
+    Transport transport;
     Long userId;
 
     public String toEmailString() {

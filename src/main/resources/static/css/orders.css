@@ -1,0 +1,88 @@
+.checkout {
+    width: 100%;
+    height: 203px;
+    left: 0px;
+    top: 85px;
+    background: #735CFF;
+    border-radius: 5px;
+}
+.basic-info {
+    box-sizing: border-box;
+    position: absolute;
+    width: 518px;
+    left: 224px;
+    top: 320px;
+    border: 1px solid #EAECF5;
+    border-radius: 20px;
+}
+.shipping{
+    box-sizing: border-box;
+    position: absolute;
+    width: 518px;
+    left: 224px;
+    top: 650px;
+    border: 1px solid #EAECF5;
+    border-radius: 20px;
+}
+.ups-express{
+    box-sizing: border-box;
+    position: absolute;
+    width: 445px;
+    height: 111px;
+    background: #FFFFFF;
+    border: 1px solid #EAECF5;
+    border-radius: 5px;
+}
+.ups-express-text{
+    position: absolute;
+    width: 82px;
+    height: 12px;
+    left: 317px;
+    top: 1171px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #000000;
+}
+.ups-express-text2{
+    position: absolute;
+    width: 206px;
+    height: 12px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #939393;
+}
+.ups-express-text3{
+    position: absolute;
+    width: 61px;
+    height: 12px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 12px;
+    color: #000000;
+}
+.items-order{
+    position: absolute;
+    width: 366px;
+    height: 620px;
+    left: 790px;
+    top: 399px;
+    border-radius: 10px;
+}
+.payment-style{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 518px;
+    height: 478px;
+    left: 224px;
+    top: 1014px;
+    border-radius: 20px;
+}

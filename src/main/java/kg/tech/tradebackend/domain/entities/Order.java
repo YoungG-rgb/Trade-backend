@@ -2,6 +2,7 @@ package kg.tech.tradebackend.domain.entities;
 
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.enums.PaymentMethod;
+import kg.tech.tradebackend.domain.enums.Transport;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -33,6 +34,9 @@ public class Order {
 
     LocalDateTime createdAt;
     LocalDate deliverDate;
+
+    @Enumerated(value = EnumType.STRING)
+    Transport transport;
 
     @Enumerated(value = EnumType.STRING)
     PaymentMethod paymentMethod;

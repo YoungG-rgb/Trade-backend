@@ -20,8 +20,6 @@ public class Image {
     @SequenceGenerator(name = "IMAGES_SEQ", sequenceName = "IMAGES_SEQ", allocationSize = 1)
     Long id;
 
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
     byte[] picture;
 
     boolean isMain;

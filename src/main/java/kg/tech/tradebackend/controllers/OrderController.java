@@ -1,5 +1,6 @@
 package kg.tech.tradebackend.controllers;
 
+import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.models.OrderModel;
 import kg.tech.tradebackend.domain.response.ResponseModel;
@@ -16,8 +17,8 @@ public class OrderController extends BaseController {
     private final OrderService orderService;
 
     @GetMapping("/{userId}")
-    public ResponseModel<List<OrderModel>> getUserOrders(@PathVariable("userId") Long userId){
-        return successResponse(orderService.findAllByUserId(userId));
+    public ResponseModel<OrderModel> getUserOrders(@PathVariable("userId") Long userId){
+        return successResponse(orderService.findByUserIdAndStatus(userId, OrderStatus.START));
     }
 
     @PostMapping

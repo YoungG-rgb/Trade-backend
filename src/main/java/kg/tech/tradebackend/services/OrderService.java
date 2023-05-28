@@ -1,5 +1,6 @@
 package kg.tech.tradebackend.services;
 
+import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.models.OrderModel;
 
@@ -13,7 +14,7 @@ public interface OrderService {
     void changeStatusToDelivered(Long orderId) throws OrderException;
     void changeStatusToCompleted(Long orderId) throws OrderException;
 
-    List<OrderModel> findAllByUserId(Long userId);
+    OrderModel findByUserIdAndStatus(Long userId, OrderStatus status);
 
 
 }

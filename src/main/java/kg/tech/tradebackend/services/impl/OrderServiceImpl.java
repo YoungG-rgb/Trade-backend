@@ -91,12 +91,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderModel> findAllByUserId(Long userId) {
-        return orderRepository
-                .findByUserId(userId)
-                .stream()
-                .map(orderMapper::toModel)
-                .toList();
+    public OrderModel findByUserIdAndStatus(Long userId, OrderStatus status) {
+        return orderMapper.toModel(
+                orderRepository.findByUserIdAndStatusIs(userId, status)
+        );
     }
 
     private Order findById(Long id) throws OrderException {

@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Data
 @Builder
@@ -34,4 +35,13 @@ public class UserModel {
     List<PhoneModel> phoneModels;
     List<CouponModel> couponModels;
     List<RoleModel> roleModels;
+
+    public String getAddressInfo(){
+        return addressModel.getTown() +
+                " " +
+                addressModel.getStreet() +
+                " " +
+                addressModel.getHouseNumber() +
+                "кв";
+    }
 }

@@ -29,6 +29,9 @@ public class Address {
     @Enumerated(EnumType.STRING)
     HouseType houseType;
 
+    Double longitude;
+    Double latitude;
+
     public Address(AddressModel addressModel) {
         this.id = addressModel.getId();
         this.town = addressModel.getTown();
