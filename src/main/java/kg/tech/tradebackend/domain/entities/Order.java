@@ -41,6 +41,8 @@ public class Order {
     @Enumerated(value = EnumType.STRING)
     PaymentMethod paymentMethod;
 
+    String history;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "orders_item",
             joinColumns = {@JoinColumn(name = "orders_id")},

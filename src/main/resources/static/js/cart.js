@@ -1,4 +1,6 @@
 const userOrders = $('#userItems-table');
+const userCoupons = $('#couponsByUserId');
+let $liveToast = $('#liveToast');
 
 $(document).ready(() => {
     let userId = $('#userId').val();
@@ -22,7 +24,12 @@ $(document).ready(() => {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${itemArray[i].name}</h5>
                                                     <p class="card-text">${itemArray[i].price}с</p>
-                                                    <p class="card-text"><small class="text-muted">${itemArray[i].dialColor}</small></p>
+                                                    <p style="width: 20px;
+                                                              height: 20px;
+                                                              border-radius: 7.40653px;
+                                                              background-color: ${itemArray[i].colorCode}">
+                                                              
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -34,6 +41,57 @@ $(document).ready(() => {
                     }
                 })
             })
+
+
+        fetch('/api/coupons/' + userId)
+            .then(function (response) {
+                response.json().then(function (responseModel) {
+                    let couponModels = responseModel.result;
+                    if (couponModels !== null && couponModels.length > 0) {
+                        for (let i = 0; i < couponModels.length; i++) {
+                            userCoupons.append(`
+                                <tr>
+                                    <td>${couponModels[i].uuid}</td>
+                                    <td>${couponModels[i].bonus}</td>
+                                    <td>
+                                        <button 
+                                            type="button" 
+                                            style="background: #735CFF; border: none" 
+                                            onclick="applyFreeCoupon('${couponModels[i].uuid}', ${userId})"
+                                        > 
+                                        <i class="bi bi-plus"></i> 
+                                        </button>
+                                    </td>
+                                </tr>   
+                            `)
+                        }
+                    }
+                })
+            }).catch(function (response) {
+                console.error(response)
+        })
     }
 
 })
+
+function applyFreeCoupon(uuid, userId) {
+    fetch(new Request('/api/coupons/' + userId + '?couponUuid=' + uuid, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'}
+    }))
+        .then(function (response) {
+            response.json().then(function (couponModel) {
+                let message = 'Получено ' + couponModel.result.bonus + 'бонусов'
+                $('#view-user-coupons').modal('hide')
+                showResponse(message)
+            })
+        });
+}
+
+function showResponse(message) {
+    $('#body-message').val(message)
+    $liveToast.toast('show')
+    $liveToast.on('hidden.bs.toast', function () {
+        location.reload()
+    })
+}

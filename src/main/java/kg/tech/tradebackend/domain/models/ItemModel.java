@@ -18,6 +18,7 @@ public class ItemModel {
     BigDecimal price;
     Integer count;
     Color dialColor;
+    String colorCode;
     String glass;
     String waterResistance;
     String straps;
@@ -26,4 +27,8 @@ public class ItemModel {
     String description;
     boolean active = true;
     List<ImageModel> imageModels;
+
+    public String getColorCode() {
+        return this.dialColor.getCode();
+    }
 }

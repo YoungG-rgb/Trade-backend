@@ -1,11 +1,18 @@
 package kg.tech.tradebackend.services.impl;
 
+import kg.tech.tradebackend.domain.entities.Coupon;
+import kg.tech.tradebackend.domain.entities.Order;
 import kg.tech.tradebackend.domain.entities.User;
+import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.UserFilterPattern;
+import kg.tech.tradebackend.domain.models.CouponModel;
 import kg.tech.tradebackend.domain.models.UserModel;
 import kg.tech.tradebackend.domain.models.UserRegisterModel;
+import kg.tech.tradebackend.mappers.CouponMapper;
 import kg.tech.tradebackend.mappers.UserMapper;
+import kg.tech.tradebackend.repositories.CouponRepository;
+import kg.tech.tradebackend.repositories.OrderRepository;
 import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.EmailSenderService;
 import kg.tech.tradebackend.services.UserService;
@@ -22,8 +29,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -35,6 +43,9 @@ public class UserServiceImpl implements UserService {
     EmailSenderService emailSenderService;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    CouponMapper couponMapper;
+    CouponRepository couponRepository;
+    OrderRepository orderRepository;
 
     @Override
     public Page<UserModel> filter(UserFilterPattern userFilterPattern) {
@@ -122,5 +133,34 @@ public class UserServiceImpl implements UserService {
                 userRepository.findByUsername(username)
                         .orElseThrow(() -> new UsernameNotFoundException("USERNAME IS NULL"))
         );
+    }
+
+    @Override
+    public List<CouponModel> findCouponsByUserId(Long userId) throws TradeException {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new TradeException("USER NOT FOUND"))
+                .getCoupons()
+                .stream()
+                .filter(Coupon::isValid)
+                .map(couponMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public CouponModel findByIdAndApplyCoupon(Long userId, String uuid) throws TradeException {
+        Coupon coupon = couponRepository.findByUuid(uuid).orElseThrow(() -> new TradeException("COUPON NOT FOUND"));
+        coupon.setValid(false);
+
+        Order order = orderRepository.findByUserIdAndStatusIs(userId, OrderStatus.START);
+
+        order.setTotal(
+                order.getTotal().subtract(coupon.getBonus())
+        );
+
+        orderRepository.save(order);
+        couponRepository.save(coupon);
+
+        return couponMapper.toModel(coupon);
+
     }
 }

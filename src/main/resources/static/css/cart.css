@@ -86,3 +86,53 @@
     top: 1014px;
     border-radius: 20px;
 }
+.custom-button {
+    position: absolute;
+    width: 445px;
+    background: #735CFF;
+    border-radius: 5px;
+    height: 55px;
+    color: #FFFFFF;
+    border: none;
+}
+.bakai-li {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    padding-left: 18px;
+}
+.bakai-h2-1 {
+    margin-bottom: 17px;
+    color: #9b2141;
+    font-size: 24px;
+    margin-top: 25px;
+    line-height: 110%;
+}
+.bakai-h2 {
+    margin-bottom: 17px;
+    color: #9b2141;
+    font-size: 24px;
+    margin-top: 25px;
+    line-height: 110%;
+}
+.bakai-h3 {
+    font-weight: 500;
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 25px;
+    line-height: 110%;
+    color: #9b2141;
+}
+.bakai-h3-2 {
+    font-weight: 500;
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 25px;
+    line-height: 110%;
+    color: #9b2141;
+}
+.apply-coupon {
+    left: 1089px;
+    margin-right: 30px;
+    top: 315px;
+    width: 355px;
+}

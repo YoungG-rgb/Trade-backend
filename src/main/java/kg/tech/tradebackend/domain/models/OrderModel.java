@@ -32,6 +32,7 @@ public class OrderModel {
     PaymentMethod paymentMethod;
     Transport transport;
     Long userId;
+    String history;
 
     public String toEmailString() {
         StringJoiner emailText = new StringJoiner("\n");

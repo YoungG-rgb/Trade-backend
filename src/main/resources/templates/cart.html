@@ -87,7 +87,7 @@
                                     <input type="checkbox" aria-label="Checkbox for following text input" id="ups-express">
                                 </div>
                             </div>
-                            <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="UPS Express 2-3 working days" readonly>
+                            <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="UPS Express 7 рабочих дней" readonly>
                             <div class="input-group-append"> <span class="input-group-text">499с</span> </div>
                         </div>
 
@@ -97,7 +97,7 @@
                                     <input type="checkbox" aria-label="Checkbox for following text input" id="ups-standard">
                                 </div>
                             </div>
-                            <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="UPS Standard 2-3 working days" readonly>
+                            <input type="text" class="form-control" aria-label="Text input with checkbox" placeholder="UPS Standard 30-60 рабочих дней" readonly>
                             <div class="input-group-append"> <span class="input-group-text">Бесплатно</span> </div>
                         </div>
 
@@ -149,11 +149,220 @@
                         </button>
                     </h2>
                 </div>
+                <div class="accordion" id="accordionExamplePayment">
 
-                <div id="collapseOne4" class="collapse show" aria-labelledby="headingOne4" data-parent="#accordionExample4">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <img src="/images/paymentTypes.png" width="199" height="25" class="d-inline-block align-top" alt="">
+                    <div class="card">
+                        <div class="card-header" id="headingOnePayment">
+                            <h2 class="mb-0">
+                                <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                                        data-target="#collapseOnePayment" aria-expanded="true" aria-controls="collapseOnePayment">
+                                    <i class="bi bi-cash-coin"></i> С баланса
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOnePayment" class="collapse show" aria-labelledby="headingOnePayment" data-parent="#accordionExamplePayment">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Баланс</label>
+                                    <div class="input-group-append">
+                                        <input type="text" class="form-control" readonly
+                                               placeholder="Баланс" id="prof_balance" th:value="${user.balance}">
+                                        <span class="input-group-text">сом</span>
+                                    </div>
+                                    <br>
+                                    <div style="height: 55px;">
+                                        <button type="button" class="custom-button">Подтвердить заказ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="bi bi-credit-card"></i> С кредитной карты
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExamplePayment">
+                            <div class="card-body">
+                                <img src="/images/paymentTypes.png" width="199" height="25" class="d-inline-block align-top" alt="">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="card_id" hidden
+                                           th:value="${user.creditCardModel ne null && user.creditCardModel.id ne null ?
+                                       user.creditCardModel.id : ''}">
+
+                                    <label for="card_number">Номер карты</label>
+                                    <input type="text" class="form-control" id="card_number"
+                                           th:value="${user.creditCardModel ne null && user.creditCardModel.cardNumber ne null ?
+                                       user.creditCardModel.cardNumber : ''}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="card_expiryDate">Срок истечения карты</label>
+                                    <input type="date" class="form-control" id="card_expiryDate"
+                                           th:value="${user.creditCardModel ne null && user.creditCardModel.expiryDate ne null ?
+                                       user.creditCardModel.expiryDate : ''}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="card_cvc">Cvc Cvv</label>
+                                    <input type="text" class="form-control" id="card_cvc"
+                                           th:value="${user.creditCardModel ne null && user.creditCardModel.expiryDate ne null ?
+                                       user.creditCardModel.expiryDate : ''}">
+                                </div>
+                                <br>
+                                <div style="height: 55px;">
+                                    <button type="button" class="custom-button">Подтвердить заказ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <i class="bi bi-journal-text"></i> В рассрочку
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExamplePayment">
+                            <div class="card-body">
+                                Компания «Volumenzeit» сотрудничает с несколькими банками в сфере потребительского кредитования.
+                                Вы самостоятельно можете выбрать банк, кредитом которого решите воспользоваться
+                                для покупки товаров компании «Volumenzeit».<br><br>
+
+                                <img src="/images/bakai.png" width="481" height="120" class="d-inline-block align-top" alt=""><br><br>
+
+                                <div style="height: 55px;">
+                                    <button type="button" data-toggle="modal" data-target="#bakai-info"
+                                            class="custom-button">Подробно/Подтвердить заказ</button>
+                                </div>
+                            </div>
+                            <div id="bakai-info" class="modal fade" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Потребительское кредитование от Бакай банк</h5>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="container modal-body">
+                                            <h2 class="bakai-h2-1"> 1) Товары в кредит</h2>
+                                            <ul style="padding-left: 0; margin-bottom: 25px;">
+                                                <li class="bakai-li">
+                                                    <strong>БЕЗ первоначального взноса, по&nbsp;кредитам до&nbsp;100 000 сом</strong>
+                                                    <strong>!</strong>
+                                                </li>
+                                                <li class="bakai-li">
+                                                    <strong>БЕЗ поручительства, по&nbsp;кредитам до&nbsp;50 000 сом</strong>
+                                                    <strong>!</strong>
+                                                </li>
+                                                <li class="bakai-li">
+                                                    <strong>БЕЗ справки с&nbsp;места жительства</strong>
+                                                    <strong>!</strong>
+                                                </li>
+                                            </ul>
+                                            <h2 class="bakai-h2">2) Рассрочка без переплат.</h2>
+                                            <h3 class="bakai-h3">Условия кредитования</h3>
+                                            <table style="border-collapse: collapse; width: 100%;" border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Сумма кредита</p>  </td>
+                                                        <td style="width: 75%;">  <p>от&nbsp;5000 до&nbsp;150 000 сом</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Срок кредита</p>  </td>
+                                                        <td style="width: 75%;">  <p>По&nbsp;кредитам в&nbsp;размере:<br>от&nbsp;5000 до&nbsp;50 000 сом&nbsp;— до&nbsp;12 месяцев;<br>свыше 50 000 до&nbsp;24 месяцев;</p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Ставка процента</p>  </td>
+                                                        <td style="width: 75%;">  <p>24%&nbsp;— участникам зарплатных проектов и&nbsp;держателям пенсионных карт ОАО&nbsp;«Бакай Банк»<br>от&nbsp;28%&nbsp;— для остальной категории граждан</p>  <p>Рассрочка&nbsp;&nbsp;— 006&nbsp;&nbsp;— 0%</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Первоначальный взнос</p>  </td>
+                                                        <td style="width: 75%;">  <p>По&nbsp;кредитам до&nbsp;100 000 сом первоначальный взнос не&nbsp;требуется, свыше 100 000 сом&nbsp;— 20% от&nbsp;суммы приобретения</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Обеспечение</p>  </td>
+                                                        <td style="width: 75%;">  <p>до&nbsp;50 000 сом&nbsp;— приобретаемое имущество<br>свыше 50 000 сом&nbsp;— приобретаемое имущество и&nbsp;1 поручительство</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Досрочное погашение</p></td>
+                                                        <td style="width: 75%;">  <p>&nbsp;В&nbsp;любое удобное время, без комиссий!</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Возраст клиента</p>  </td>
+                                                        <td style="width: 75%;">  <p>от 21 до 65 лет (до 70 лет участникам зарплатных проектов и держателям пенсионных карт ОАО «Бакай Банк»)</p>  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 25%;">  <p>Стаж работы</p>  </td>
+                                                        <td style="width: 75%;">  <p>На&nbsp;последнем месте минимум 6 месяцев.</p>  </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <h3 class="bakai-h3-2"><strong>Необходимые документы для получения финансирования:</strong></h3>
+                                            <table style="border-collapse: collapse; width: 100%;" border="1">
+                                                <tbody>
+                                                    <tr>  <td style="width: 25%;">Сумма кредита</td><td style="width: 35%;">Для участников зарплатных проектов и держателей пенсионных карт ОАО «Бакай Банк»</td><td style="width: 40%;">Для всех клиентов</td></tr>
+                                                    <tr>  <td style="width: 25%;">Кредиты до&nbsp;50 000 сом</td>  <td style="width: 35%;">1. Паспорт</td>  <td style="width: 40%;">  <p>1. Паспорт</p>  <p>2. Документы подтверждающие доход*</p>  </td></tr>
+                                                    <tr>  <td style="width: 25%;">Кредиты свыше 50 000 сом</td>  <td style="width: 35%;">  <p>1. Паспорт заёмщика, его супруги (-га), свидетельство о&nbsp;браке</p>  <p>2. Паспорт Поручателя, его супруги (-га), свидетельство о&nbsp;браке</p>  <p>3. Документы подтверждающие доход<span style="color: #c0392b;"><strong>*</strong></span> Поручителя</p>  </td>  <td style="width: 40%;">  <p>1. Паспорт заёмщика, его супруги (-га), свидетельство о&nbsp;браке</p>  <p>2. Паспорт Поручателя, его супруги (-га), свидетельство о&nbsp;браке</p>  <p>3. Документы подтверждающие доход<span style="color: #c0392b;"><strong>*</strong></span>&nbsp;Поручителя</p>  </td></tr>
+                                                </tbody>
+                                            </table>
+                                            <p class=""><strong><span style="color: #c0392b;">*</span> Справка о&nbsp;доходах за&nbsp;последние 6-12 месяцев / патент / свидетельство ИП&nbsp;/ пенсионное удостоверение / другие документы</strong></p>
+                                            <p> Call - центр : 6111 </p>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                                <button type="button" class="btn btn-success" id="completeOrderBakai" style="background: #735CFF;">Подтвердить заказ</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn custom-button apply-coupon"
+                data-toggle="modal" data-target="#view-user-coupons">
+             Воспользоваться купонами
+        </button>
+
+        <div>
+            <div id="view-user-coupons" class="modal fade" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalCouponLabel">Мои купоны</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="container modal-body">
+                            <table id="userCouponsTable" class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Код</th>
+                                    <th>Бонус</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody id="couponsByUserId"></tbody>
+                            </table>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                <button type="button" class="btn btn-success" style="background: #735CFF;"
+                                        id="saveUserCoupons"> Сохранить
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,6 +370,23 @@
         </div>
     </div>
 
+    <div style="position: absolute; top: 0; right: 0;">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header">
+                <i class="bi bi-check-circle" style="color: green"></i>
+                <strong class="mr-auto" style="margin-left: 10px">Успешно</strong>
+                <small>1с назад</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" aria-label="body-message" id="body-message" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div th:replace="fragments/scripts.html"></div>
 <script type="text/javascript" src="/js/cart.js"></script>

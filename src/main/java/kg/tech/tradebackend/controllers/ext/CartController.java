@@ -1,7 +1,6 @@
 package kg.tech.tradebackend.controllers.ext;
 
 import kg.tech.tradebackend.domain.models.UserModel;
-import kg.tech.tradebackend.services.OrderService;
 import kg.tech.tradebackend.services.UserService;
 import kg.tech.tradebackend.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
