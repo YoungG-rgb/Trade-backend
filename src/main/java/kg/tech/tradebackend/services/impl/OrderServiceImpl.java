@@ -1,11 +1,10 @@
 package kg.tech.tradebackend.services.impl;
 
+import kg.tech.tradebackend.domain.entities.*;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
+import kg.tech.tradebackend.domain.exceptions.TradeException;
+import kg.tech.tradebackend.repositories.ItemRepository;
 import kg.tech.tradebackend.utils.BaseValidator;
-import kg.tech.tradebackend.domain.entities.Card;
-import kg.tech.tradebackend.domain.entities.Coupon;
-import kg.tech.tradebackend.domain.entities.Order;
-import kg.tech.tradebackend.domain.entities.User;
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.models.OrderModel;
 import kg.tech.tradebackend.mappers.OrderMapper;
@@ -14,13 +13,16 @@ import kg.tech.tradebackend.repositories.OrderRepository;
 import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.EmailSenderService;
 import kg.tech.tradebackend.services.OrderService;
+import kg.tech.tradebackend.utils.SecurityUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,10 +37,8 @@ public class OrderServiceImpl implements OrderService {
     UserRepository userRepository;
 
     @Override
-    public OrderModel save(OrderModel orderModel, List<Long> coupons) throws Exception {
+    public OrderModel save(OrderModel orderModel) throws Exception {
         validateOrder(orderModel);
-        if (coupons != null) subtractAndToInvalidity(orderModel, coupons);
-
         emailSenderService.send(orderModel.getUserId(), "ORDER", orderModel.toEmailString());
         orderRepository.save(orderMapper.toEntity(orderModel));
         return orderModel;

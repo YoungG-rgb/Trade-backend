@@ -1,10 +1,11 @@
 const userOrders = $('#userItems-table');
 const userCoupons = $('#couponsByUserId');
+const orderHistory = $('#orderHistory');
 let $liveToast = $('#liveToast');
+let $liveToastError = $('#liveToastError');
 
 $(document).ready(() => {
     let userId = $('#userId').val();
-    console.log(userId)
     if (userId) {
         fetch('/api/order/' + userId)
             .then(function (response) {
@@ -36,8 +37,24 @@ $(document).ready(() => {
                                     </div>`
                             )
                         }
-                        console.log(orderModel.total)
                         $('#total-price-order').val(orderModel.total + 'c')
+
+                        const histories = orderModel.history.split('<br>');
+                        for (let i = 0; i < histories.length; i++) {
+                            orderHistory.append(`<tr>
+                                                    <td>
+                                                        <p>${histories[i]}</p>
+                                                    </td>
+                                                </tr>`)
+                        }
+                    } else {
+                        userOrders.append(
+                            `<div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <h1>Корзина пуста</h1>
+                                </div>
+                            </div>`
+                        )
                     }
                 })
             })
@@ -81,17 +98,30 @@ function applyFreeCoupon(uuid, userId) {
     }))
         .then(function (response) {
             response.json().then(function (couponModel) {
-                let message = 'Получено ' + couponModel.result.bonus + 'бонусов'
-                $('#view-user-coupons').modal('hide')
-                showResponse(message)
+                if (couponModel.resultCode === 'EXCEPTION') {
+                    let message = 'Ошибка, у вас нет товаров в корзине';
+                    $('#view-user-coupons').modal('hide')
+                    showError(message)
+                } else {
+                    let message = 'Получено ' + couponModel.result.bonus + 'бонусов'
+                    $('#view-user-coupons').modal('hide')
+                    showSuccess(message)
+                }
             })
-        });
+        })
 }
 
-function showResponse(message) {
+function showSuccess(message) {
     $('#body-message').val(message)
     $liveToast.toast('show')
     $liveToast.on('hidden.bs.toast', function () {
+        location.reload()
+    })
+}
+function showError(message) {
+    $('#body-message-error').val(message)
+    $liveToastError.toast('show')
+    $liveToastError.on('hidden.bs.toast', function () {
         location.reload()
     })
 }

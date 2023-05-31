@@ -8,7 +8,6 @@ import kg.tech.tradebackend.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,9 +21,8 @@ public class OrderController extends BaseController {
     }
 
     @PostMapping
-    public ResponseModel<OrderModel> create(@RequestParam(value = "applyCoupons", required = false) List<Long> applyCoupons,
-                                            @RequestBody OrderModel orderModel) throws Exception {
-        return successResponse(orderService.save(orderModel, applyCoupons));
+    public ResponseModel<OrderModel> create(@RequestBody OrderModel orderModel) throws Exception {
+        return successResponse(orderService.save(orderModel));
     }
 
     @PutMapping

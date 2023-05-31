@@ -23,13 +23,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +36,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserServiceImpl implements UserService {
+    static String HISTORY_PLACEHOLDER = "Вы сэкономили %s с, сумма заказа %s с <br>";
 
     UserRepository userRepository;
     EmailSenderService emailSenderService;
@@ -152,10 +151,9 @@ public class UserServiceImpl implements UserService {
         coupon.setValid(false);
 
         Order order = orderRepository.findByUserIdAndStatusIs(userId, OrderStatus.START);
-
-        order.setTotal(
-                order.getTotal().subtract(coupon.getBonus())
-        );
+        if (order == null) throw new TradeException("Ошибка, в корзине нет товаров");
+        order.setTotal(order.getTotal().subtract(coupon.getBonus()));
+        order.setHistory(order.getHistory() + String.format(HISTORY_PLACEHOLDER, coupon.getBonus(), order.getTotal()));
 
         orderRepository.save(order);
         couponRepository.save(coupon);

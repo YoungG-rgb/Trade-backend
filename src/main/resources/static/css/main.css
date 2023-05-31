@@ -1,0 +1,128 @@
+.header_style {
+    position: absolute;
+    width: 1583px;
+    height: 721px;
+    left: 0px;
+    top: 0px;
+
+    background: #F9FAFE;
+}
+.logo {
+    position: absolute;
+    width: 270.35px;
+    height: 48.96px;
+    left: 164.83px;
+    top: 16.2px;
+}
+.base_link{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #939393;
+}
+.home_link {
+    position: absolute;
+    width: 43px;
+    height: 12px;
+    left: 617px;
+    top: 36px;
+    font-weight: 600;
+    color: black;
+}
+.products_link {
+    position: absolute;
+    width: 61px;
+    height: 11px;
+    left: 699px;
+    top: 36px;
+    text-transform: capitalize;
+}
+.ourMission {
+    position: absolute;
+    height: 11px;
+    left: 800px;
+    top: 29px;
+}
+.aboutUs {
+    position: absolute;
+    height: 11px;
+    left: 921px;
+    top: 29px;
+}
+.watches_style {
+    position: absolute;
+    width: 62px;
+    height: 11px;
+    left: 1023px;
+    top: 29px;
+}
+.watches_content {
+    position: absolute;
+    height: 24px;
+    left: 165px;
+    top: 2171px;
+}
+.sign-button {
+    position: absolute;
+    width: 160px;
+    height: 55px;
+    left: 1115px;
+    top: 14px;
+
+    background: #735CFF;
+    border-radius: 5px;
+}
+.sign-button-text {
+    position: absolute;
+    left: 55px;
+    top: 22px;
+    font-family: 'Poppins';
+    font-style: normal;
+    line-height: 12px;
+    color: #FFFFFF;
+}
+.header-content-logo-style {
+    position: absolute;
+    width: 560px;
+    height: 95px;
+    left: 165px;
+    top: 244px;
+}
+.header-content-text {
+    position: absolute;
+    width: 557px;
+    height: 74px;
+    left: 165px;
+    top: 364px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 28px;
+    color: #939393;
+}
+.header-content-img{
+    position: absolute;
+    width: 796px;
+    height: 524px;
+    left: 762px;
+    top: 197px;
+}
+.features-style {
+    box-sizing: border-box;
+    position: absolute;
+    width: 629px;
+    height: 629px;
+    left: 222px;
+    top: 798px;
+}
+.ourMissionContent {
+    position: absolute;
+    width: 1440px;
+    height: 668px;
+    left: 0px;
+    top: 1597px;
+}

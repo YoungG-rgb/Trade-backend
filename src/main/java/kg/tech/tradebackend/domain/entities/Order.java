@@ -5,6 +5,8 @@ import kg.tech.tradebackend.domain.enums.PaymentMethod;
 import kg.tech.tradebackend.domain.enums.Transport;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.TextType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

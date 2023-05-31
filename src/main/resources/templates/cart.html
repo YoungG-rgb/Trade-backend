@@ -134,6 +134,7 @@
                                       background: #735CFF; border: none; text-align: center;
                                       font-style: normal; font-weight: 400;
                                       font-size: 27px; line-height: 19px;
+                                      outline: none;
                                       color: #FFFFFF;"/>
                     </div>
                 </div>
@@ -359,19 +360,40 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                                <button type="button" class="btn btn-success" style="background: #735CFF;"
-                                        id="saveUserCoupons"> Сохранить
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- my orders -->
+        <div class="my_orders_style accordion" id="accordionExample7">
+            <div class="card">
+                <div class="card-header" id="headingOne7">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne7" aria-expanded="true" aria-controls="collapseOne7">
+                            <i class="bi bi-archive"></i> История
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne7" class="collapse show" aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead></thead>
+                            <tbody id="orderHistory">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div style="position: absolute; top: 0; right: 0;">
-        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+    <div style="position: absolute; top: 251px; right: 680px;">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
             <div class="toast-header">
                 <i class="bi bi-check-circle" style="color: green"></i>
                 <strong class="mr-auto" style="margin-left: 10px">Успешно</strong>
@@ -383,6 +405,25 @@
             <div class="toast-body">
                 <div class="form-group">
                     <input type="text" class="form-control" aria-label="body-message" id="body-message" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; top: 251px; right: 680px;">
+        <div id="liveToastError" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header">
+                <i class="bi bi-exclamation-circle" style="color: red"></i>
+                <strong class="mr-auto" style="margin-left: 10px">Ошибка</strong>
+                <small>1с назад</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <div class="form-group">
+                    <input type="text" class="form-control"
+                           style="width: 100%; flex-wrap: wrap"
+                           aria-label="body-message" id="body-message-error" readonly>
                 </div>
             </div>
         </div>

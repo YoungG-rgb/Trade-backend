@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VOLUMENZEIT</title>
+    <div th:replace="fragments/links.html"></div>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header_style">
+        <div class="logo">
+            <img src="/images/logo.svg"  alt="logo">
+        </div>
+        <nav id="navbar-example2">
+            <a class="base_link home_link" th:href="@{/index}">Домой</a>
+            <a class="base_link products_link" th:href="@{/products}">Продукты</a>
+            <a class="base_link nav-link ourMission" href="#our_mission">Наша миссия</a>
+            <a class="base_link nav-link aboutUs" href="#about_us">О нас</a>
+            <a class="base_link nav-link watches_style" href="#watches">Часы</a>
+
+            <a th:if="${isAnonymous}" class="sign-button" href="/login">
+                <span class="sign-button-text">Войти</span>
+            </a>
+            <a th:if="${!isAnonymous}" style="background-color: rgb(255, 99, 71)"
+               class="sign-button" href="/logout"><span class="sign-button-text">Выйти</span>
+            </a>
+        </nav>
+
+        <div style="position: absolute; left: 2%; right: 95%; top: 110px">
+            <img src="/images/header-content-icons.png" alt="icons" />
+        </div>
+
+        <div class="header-content-logo-style">
+            <img src="/images/header-content-logo.png" alt="content-logo" />
+        </div>
+        <div class="header-content-text">
+            Добро пожаловать на страницу Volumenzeit Watches - вашего надежного партнера в мире часового искусства!
+            <br>
+            Мы являемся лидерами в производстве высококачественных наручных часов,
+            <br/>
+            которые сочетают в себе прекрасный дизайн, надежность и техническое совершенство.
+        </div>
+
+        <div class="header-content-img">
+            <img src="/images/header-content-img.png" />
+        </div>
+    </div>
+    <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+        <div id="features" class="features-style">
+            <img src="/images/features.png" alt="Функции" />
+        </div>
+        <div class="ourMissionContent" id="our_mission">
+            <img src="/images/our-mission-img.png" alt="Наша миссия" />
+        </div>
+        <div id="watches" class="watches_content">
+            Часы
+            <br>
+            <span style="color: #939393; font-weight: 400; font-size: 14px;">
+                Volumenzeit дает вам в общей сложности 48 комбинаций стилей с 4 типами циферблатов, 4 цветами циферблатов, 3 цветами корпуса,
+                <br>
+                несколько стильных комбинаций ремешков и индивидуальные варианты гравировки.
+            </span>
+        </div>
+    </div>
+
+  </div>
+</body>
+</html>
