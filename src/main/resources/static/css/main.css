@@ -126,3 +126,53 @@
     left: 0px;
     top: 1597px;
 }
+.custom-carousel-style {
+    width: 334px;
+    height: 393px;
+}
+.aboutUsContent{
+    position: absolute;
+    height: 194px;
+    left: 165px;
+    top: 2856px;
+}
+.aboutUsText{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 28px;
+
+    color: #939393;
+}
+.aboutUsVideo{
+    position: absolute;
+    width: 578px;
+    height: 342px;
+    border-radius: 5px;
+}
+.registration-style {
+    background: #735CFF;
+    background: image("static/images/footer-image-background.png");
+    position: absolute;
+    height: 442px;
+    top: 3375px;
+    width: 100%;
+}
+.registration-style-text{
+    color: #FFFFFF;
+    height: 81px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+}
+.regButton{
+    position: absolute;
+    width: 160px;
+    height: 55px;
+    left: 730px;
+    top: 270px;
+    background: #000000;
+    border-radius: 5px;
+}

@@ -19,6 +19,7 @@ public class CartController {
     public String getOrders(Model model){
         UserModel user = userService.findByUsername(SecurityUtils.getAuthenticatedUsername());
         model.addAttribute("user", user);
+        model.addAttribute("isAnonymous", SecurityUtils.isAnonymous());
 
         return "cart";
     }

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
+<body style="height: 3500px">
     <!-- HEADER -->
     <div class="header_style">
         <div class="logo">
@@ -56,16 +56,88 @@
             <img src="/images/our-mission-img.png" alt="Наша миссия" />
         </div>
         <div id="watches" class="watches_content">
-            Часы
+            <img src="/images/watches-img.png" alt="watch-text">
             <br>
             <span style="color: #939393; font-weight: 400; font-size: 14px;">
                 Volumenzeit дает вам в общей сложности 48 комбинаций стилей с 4 типами циферблатов, 4 цветами циферблатов, 3 цветами корпуса,
                 <br>
                 несколько стильных комбинаций ремешков и индивидуальные варианты гравировки.
             </span>
+
+            <div id="carouselExampleControlsNoTouching" class="carousel slide" data-touch="false" data-interval="false">
+                <div class="carousel-inner">
+                    <div id="custom-carousel-id">
+
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-target="#carouselExampleControlsNoTouching" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-target="#carouselExampleControlsNoTouching" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </div>
         </div>
+
+        <div id="about_us" class="aboutUsContent">
+            <img src="/images/aboutUsImage.png" alt="about-us-text">
+            <div class="row">
+                <div class="col">
+                    <div class="aboutUsText">
+                        <p> Volumenzeit Watches - это компания, которая специализируется на производстве высококачественных наручных часов.</p>
+                        <br/>
+
+                        <p>Наша компания была основана в 1995 году в Швейцарии, стране с богатой историей производства часов.</p>
+                        <br/>
+
+                        <p>
+                            Мы гордимся тем, что все наши часы производятся вручную в нашей мастерской в Швейцарии.
+                            Мы используем только самые качественные материалы, такие как нержавеющая сталь, золото и сапфировое стекло,
+                            чтобы обеспечить долговечность и надежность наших часов.
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="aboutUsVideo">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/s-x_HVCwKgI"
+                                title="YouTube video player" frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="registration-style">
+            <h2 class="registration-style-text">Не упустите свой шанс получить бесплатную раздачу, зарегистрируйся сейчас!</h2>
+            <p class="registration-style-text">Мы будем информировать вас о предстоящих розыгрышах, предложениях, Ход подготовки интернет-магазина и старт продаж</p>
+
+            <form id="registration-form">
+                <div class="row">
+                    <input type="text" class="form-control" placeholder="Имя" id="regName" style="width:319px; height: 55px;
+                        position: absolute; left: 392px;
+                    ">
+
+                    <input type="email" class="form-control" placeholder="email" id="regEmail" style="width: 319px; height: 55px;
+                        position: absolute; left: 730px;
+                    ">
+
+                    <input type="text" class="form-control" placeholder="Пароль" id="regPassword" style="width: 319px; height: 55px;
+                        position: absolute; left: 392px; top: 270px;
+                    ">
+
+                    <button type="button" class="regButton" onclick="addNewUser()">
+                        <span style="color: white">Зарегистрироваться</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
-  </div>
+    <div th:replace="fragments/scripts.html"></div>
+    <script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>

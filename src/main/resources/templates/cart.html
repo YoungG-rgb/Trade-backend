@@ -7,35 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/cart.css" >
+    <link rel="stylesheet" href="/css/main.css" >
 </head>
 <body style="background-color: #E5E5E5;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="/images/logo.svg" width="200" height="30" class="d-inline-block align-top" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="http://localhost:3000"> Главная </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/products">Продукты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000"> Наша миссия </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000"> О нас </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000"> Часы </a>
-                </li>
-            </ul>
+    <div class="header_style">
+        <div class="logo">
+            <img src="/images/logo.svg"  alt="logo">
         </div>
-    </nav>
+        <nav id="navbar-example2">
+            <a class="base_link home_link" th:href="@{/index}">Домой</a>
+            <a class="base_link products_link" th:href="@{/products}">Продукты</a>
+            <a class="base_link nav-link ourMission" href="#our_mission">Наша миссия</a>
+            <a class="base_link nav-link aboutUs" href="#about_us">О нас</a>
+            <a class="base_link nav-link watches_style" href="#watches">Часы</a>
+
+            <a th:if="${isAnonymous}" class="sign-button" href="/login">
+                <span class="sign-button-text">Войти</span>
+            </a>
+            <a th:if="${!isAnonymous}" style="background-color: rgb(255, 99, 71)"
+               class="sign-button" href="/logout"><span class="sign-button-text">Выйти</span>
+            </a>
+        </nav>
+    </div>
+
     <div class="checkout">
         <h1 style="padding: 70px; text-align: center">Корзина</h1>
         <input hidden id="userId" th:value="${user.getId()}">
