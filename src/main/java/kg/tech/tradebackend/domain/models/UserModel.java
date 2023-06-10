@@ -37,11 +37,14 @@ public class UserModel {
     List<RoleModel> roleModels;
 
     public String getAddressInfo(){
-        return addressModel.getTown() +
-                " " +
-                addressModel.getStreet() +
-                " " +
-                addressModel.getHouseNumber() +
-                "кв";
+        if (addressModel != null) {
+            return addressModel.getTown() +
+                    " " +
+                    addressModel.getStreet() +
+                    " " +
+                    addressModel.getHouseNumber() +
+                    "кв";
+        }
+        return null;
     }
 }

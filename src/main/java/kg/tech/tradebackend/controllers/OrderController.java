@@ -2,11 +2,18 @@ package kg.tech.tradebackend.controllers;
 
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
+import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
+import kg.tech.tradebackend.domain.models.ItemModel;
 import kg.tech.tradebackend.domain.models.OrderModel;
+import kg.tech.tradebackend.domain.models.data_tables.DataTablePage;
 import kg.tech.tradebackend.domain.response.ResponseModel;
 import kg.tech.tradebackend.services.OrderService;
+import kg.tech.tradebackend.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -34,5 +41,10 @@ public class OrderController extends BaseController {
     public ResponseModel<String> delete(@PathVariable("id") Long id) throws OrderException {
         orderService.delete(id);
         return successResponse("Удалено");
+    }
+
+    @PostMapping("/my-orders")
+    public DataTablePage<OrderModel> getMyOrders(@RequestBody OrderFilterPattern orderFilterPattern) throws OrderException {
+        return new DataTablePage<>(orderFilterPattern, orderService.findByUsername(SecurityUtils.getAuthenticatedUsername(), orderFilterPattern));
     }
 }

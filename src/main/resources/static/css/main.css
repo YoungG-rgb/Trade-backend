@@ -1,6 +1,6 @@
 .header_style {
     position: absolute;
-    width: 1583px;
+    width: 100%;
     height: 721px;
     left: 0px;
     top: 0px;
@@ -76,6 +76,14 @@
 }
 .sign-button-text {
     position: absolute;
+    left: 55px;
+    top: 22px;
+    font-family: 'Poppins';
+    font-style: normal;
+    line-height: 12px;
+    color: #FFFFFF;
+}
+.setting-button-text {
     left: 55px;
     top: 22px;
     font-family: 'Poppins';

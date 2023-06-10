@@ -87,7 +87,6 @@ function addNewItem(){
         imageModels.push(imageModel)
     }
 
-    debugger;
     fetch(new Request('/admin/items', {
             method: 'POST',
             headers: {'content-type': 'application/json'},

@@ -30,17 +30,16 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean addToCartItem(Long itemId) throws TradeException {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new TradeException("ITEM NOT FOUND"));
-//        User user = userRepository.findByUsername(SecurityUtils.getAuthenticatedUsername())
-//                .orElseThrow(() -> new TradeException("USER IS NOT AUTHENTICATED"));
-        User user = userRepository.findByUsername("zhtoichubaev")
+        User user = userRepository.findByUsername(SecurityUtils.getAuthenticatedUsername())
                 .orElseThrow(() -> new TradeException("USER IS NOT AUTHENTICATED"));
+
         Order order = orderRepository.findByUserIdAndStatusIs(user.getId(), OrderStatus.START);
 
         if (order == null) {
             initializeOrder(item, user);
         } else {
             order.getItems().add(item);
-            order.setTotal(order.getTotal().add(item.getPrice()));
+            order.addToTotal(item.getPrice());
             orderRepository.save(order);
         }
 

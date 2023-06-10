@@ -24,9 +24,24 @@
             <a th:if="${isAnonymous}" class="sign-button" href="/login">
                 <span class="sign-button-text">Войти</span>
             </a>
-            <a th:if="${!isAnonymous}" style="background-color: rgb(255, 99, 71)"
-               class="sign-button" href="/logout"><span class="sign-button-text">Выйти</span>
-            </a>
+            <div class="dropdown">
+                <a class="btn btn-secondary sign-button dropdown-toggle" href="#" role="button"
+                   data-toggle="dropdown"
+                   th:if="${!isAnonymous}"
+                   aria-expanded="false">
+                    <span class="setting-button-text">Настройки</span>
+                </a>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/settings}">Профиль</a>
+                    <a class="dropdown-item" th:href="@{/orders}">Заказы</a>
+                    <a class="dropdown-item" th:href="@{/cart}">Корзина</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item nav-link" th:href="@{/logout}">
+                        Выйти
+                    </a>
+                </div>
+            </div>
         </nav>
 
         <div style="position: absolute; left: 2%; right: 95%; top: 110px">

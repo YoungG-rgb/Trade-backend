@@ -3,7 +3,10 @@ package kg.tech.tradebackend.services.impl;
 import kg.tech.tradebackend.domain.entities.*;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
+import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
 import kg.tech.tradebackend.repositories.ItemRepository;
+import kg.tech.tradebackend.specifications.ItemSpecification;
+import kg.tech.tradebackend.specifications.OrderSpecification;
 import kg.tech.tradebackend.utils.BaseValidator;
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.models.OrderModel;
@@ -17,6 +20,9 @@ import kg.tech.tradebackend.utils.SecurityUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -123,5 +129,18 @@ public class OrderServiceImpl implements OrderService {
             case CREDIT_CARD ->
                     BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() ) && creditCard.getExpiryDate() == null;
         }) throw new OrderException("Не хватает средств");
+    }
+
+    @Override
+    public Page<OrderModel> findByUsername(String username, OrderFilterPattern paginationCriteria) throws OrderException {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new OrderException("Пользователя с таким именем нет"));
+        OrderSpecification orderSpecification = new OrderSpecification(paginationCriteria, user);
+        Page<Order> orderPage = orderRepository.findAll(orderSpecification, paginationCriteria.toPageRequest());
+
+        return new PageImpl<>(
+                orderPage.stream().map(orderMapper::toModel).toList(),
+                paginationCriteria.toPageRequest(),
+                orderPage.getTotalPages()
+        );
     }
 }

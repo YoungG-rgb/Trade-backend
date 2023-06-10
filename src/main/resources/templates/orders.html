@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div th:replace="fragments/links.html"></div>
+    <link rel="stylesheet" href="/css/main.css" >
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header_style">
+        <div class="logo">
+            <img src="/images/logo.svg"  alt="logo">
+        </div>
+        <nav id="navbar-example2">
+            <a class="base_link home_link" th:href="@{/index}">Домой</a>
+            <a class="base_link products_link" th:href="@{/products}">Продукты</a>
+            <a class="base_link nav-link ourMission" href="#our_mission">Наша миссия</a>
+            <a class="base_link nav-link aboutUs" href="#about_us">О нас</a>
+            <a class="base_link nav-link watches_style" href="#watches">Часы</a>
+
+            <a th:if="${isAnonymous}" class="sign-button" href="/login">
+                <span class="sign-button-text">Войти</span>
+            </a>
+
+            <div class="dropdown">
+                <a class="btn btn-secondary sign-button dropdown-toggle" href="#" role="button"
+                   data-toggle="dropdown" th:if="${!isAnonymous}" aria-expanded="false">
+                    <span class="setting-button-text">Настройки</span>
+                </a>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/settings}">Профиль</a>
+                    <a class="dropdown-item" th:href="@{/orders}">Заказы</a>
+                    <a class="dropdown-item" th:href="@{/cart}">Корзина</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item nav-link" th:href="@{/logout}">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div style="width: 100%;
+                height: 203px;
+                left: 0px;
+                top: 85px;
+                background: #735CFF;
+                border-radius: 5px;
+                position: absolute;">
+        <h1 style="padding: 70px; text-align: center; color: #F9FAFE;">Мои заказы</h1>
+    </div>
+
+    <div>
+        <form id="searchOrderForm" th:object="${filterPattern}" method="post"><br>
+
+        </form>
+    </div>
+    <div style="position: absolute;
+                top: 290px;
+                width: 100%;">
+        <br>
+        <table id="my-orders-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
+            <thead>
+            <tr>
+                <th>Создано</th>
+                <th>Доставлено</th>
+                <th>Сумма</th>
+                <th>Метод оплаты</th>
+                <th>Статус</th>
+                <th>Перевозка</th>
+                <th>История использованных купонов</th>
+                <th>Карта</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/scripts.html"></div>
+    <script type="text/javascript" src="/js/app-common-scripts.js"></script>
+    <script type="text/javascript" src="/js/orders.js"></script>
+</body>
+</html>

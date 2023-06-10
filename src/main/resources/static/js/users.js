@@ -34,13 +34,24 @@ function initUsersTable() {
             {data: 'username', orderable: true},
             {data: 'email', orderable: false},
             {data: 'balance', orderable: false},
-            {data: 'addressModel', render: data => JSON.stringify(data), orderable: false},
+            {data: 'addressModel', render: renderAddress, orderable: false},
             {data: 'phoneModels', render: data => data.map(i => i.number), orderable: false},
             {data: 'id', render: formatActionForUserAuditableColumns, orderable: false}
         ]
     })
 }
-
+function renderAddress(data, type, row) {
+    debugger;
+    if (data !== null) {
+        return `<td>
+                <div> ${JSON.stringify(data)}</div>
+            </td>`
+    } else {
+        return `<td>
+                <div> Данные адреса не заполнены </div>
+            </td>`
+    }
+}
 function formatActionForUserAuditableColumns(data, type, row) {
     return `<td>
                 <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#userEditForm"

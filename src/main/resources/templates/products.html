@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукты</title>
+    <div th:replace="fragments/links.html"></div>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/main.css" >
+    <link rel="stylesheet" href="/css/product.css" >
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header_style">
+        <div class="logo">
+            <img src="/images/logo.svg"  alt="logo">
+        </div>
+        <nav id="navbar-example2">
+            <a class="base_link home_link" th:href="@{/index}">Домой</a>
+            <a class="base_link products_link" th:href="@{/products}">Продукты</a>
+            <a class="base_link nav-link ourMission" href="#our_mission">Наша миссия</a>
+            <a class="base_link nav-link aboutUs" href="#about_us">О нас</a>
+            <a class="base_link nav-link watches_style" href="#watches">Часы</a>
+
+            <a th:if="${isAnonymous}" class="sign-button" href="/login">
+                <span class="sign-button-text">Войти</span>
+            </a>
+
+            <div class="dropdown">
+                <a class="btn btn-secondary sign-button dropdown-toggle" href="#" role="button"
+                   data-toggle="dropdown"
+                   th:if="${!isAnonymous}"
+                   aria-expanded="false">
+                    <span class="setting-button-text">Настройки</span>
+                </a>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" th:href="@{/settings}">Профиль</a>
+                    <a class="dropdown-item" th:href="@{/orders}">Заказы</a>
+                    <a class="dropdown-item" th:href="@{/cart}">Корзина</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item nav-link" th:href="@{/logout}">
+                        Выйти
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="product_view_start">
+        <h1 style="padding: 70px; text-align: center; color: #F9FAFE;">Продукты</h1>
+    </div>
+
+    <div class="row" style="margin-top: 289px">
+        <div class="col-2" style="padding-left: 30px">
+            <form id="searchExtItemForm" th:object="${itemFilterPattern}" method="post"><br>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Название товара" th:field="*{name}"
+                       style="width: 206px">
+                <br><div class="custom-divider"></div><br>
+
+                <label> Цена  </label>
+                <input type="text" class="form-control"
+                       placeholder="0c" th:field="*{priceFrom}" th:value="0"
+                       style="width: 76px">
+
+                <span style="position:absolute; top: 149px; margin-left: 89px"> ДО </span>
+                <input type="text" class="form-control"
+                       placeholder="500c" th:field="*{priceTo}" th:value="500"
+                       style="width: 76px; position: absolute;
+                       top:141px; margin-left: 128px">
+
+                <input hidden th:field="*{dialColor}" id="selectedColor">
+            </form>
+            <br><div class="custom-divider"></div><br>
+            <label> Цвета  </label><br>
+            <div class="form-check form-check-inline">
+                <div style="width: 39px; height: 39px; border-radius: 7.40653px;
+                         background: linear-gradient(210.81deg, #555555 18.68%, #0A0A0A 98.45%);"
+                     onclick="fillCustomColor('BLACK', 'width: 39px; height: 39px; border-radius: 7.40653px;\n'+
+'                         background: linear-gradient(210.81deg, #555555 18.68%, #0A0A0A 98.45%);')">
+                </div>
+            </div>
+            <div class="form-check form-check-inline">
+                <div style="width: 39px;height: 39px; border-radius: 7.40653px;
+                         background: linear-gradient(210.81deg, #E3E3E3 18.68%, #7B838F 98.45%);"
+                     onclick="fillCustomColor('GRAY', 'width: 39px;height: 39px; border-radius: 7.40653px;\n'+
+'                         background: linear-gradient(210.81deg, #E3E3E3 18.68%, #7B838F 98.45%);')">
+                </div>
+            </div>
+            <div class="form-check form-check-inline">
+                <div style="width: 39px;height: 39px; border-radius: 7.40653px;
+                         background: linear-gradient(210.81deg, #58B2CE 18.68%, #023C96 98.45%);"
+                     onclick="fillCustomColor('BLUE', 'width: 39px;height: 39px; border-radius: 7.40653px;\n'+
+'                         background: linear-gradient(210.81deg, #58B2CE 18.68%, #023C96 98.45%);')">
+                </div>
+            </div>
+            <div class="form-check form-check-inline">
+                <div style="width: 39px;height: 39px; border-radius: 7.40653px;
+                         background: linear-gradient(210.81deg, #008000 18.68%, #023C96 98.45%);"
+                     onclick="fillCustomColor('GREEN', 'width: 39px;height: 39px; border-radius: 7.40653px;\n'+
+'                         background: linear-gradient(210.81deg, #008000 18.68%, #023C96 98.45%);')">
+                </div>
+            </div>
+            <br>
+            <br><div class="custom-divider"></div><br>
+            <button id="reloadItemsExtFilterButton" class="btn btn-primary filter-button">Фильтровать</button>
+        </div>
+        <div class="col-10"><br>
+            <table id="ext-items-table" class="table table-hover table-bordered" data-order='[[0, "asc"]]'>
+                <thead>
+                <tr>
+                    <th style="width: 70px;">Название</th>
+                    <th style="width: 340px;">Товар</th>
+                    <th style="width: 100px">Цена (-сом)</th>
+                    <th>Информация</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="product-toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header">
+                <strong class="mr-auto">Volumenzeit</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body" id="product-toast-body"></div>
+        </div>
+    </div>
+    <div th:replace="fragments/scripts.html"></div>
+    <script type="text/javascript" src="/js/app-common-scripts.js"></script>
+    <script type="text/javascript" src="/js/products.js"></script>
+</body>
+</html>
