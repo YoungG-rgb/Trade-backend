@@ -1,10 +1,14 @@
 package kg.tech.tradebackend.services.impl;
 
 import kg.tech.tradebackend.domain.entities.*;
+import kg.tech.tradebackend.domain.enums.PaymentMethod;
+import kg.tech.tradebackend.domain.enums.Transport;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
+import kg.tech.tradebackend.domain.models.RequestOrderModel;
 import kg.tech.tradebackend.repositories.ItemRepository;
+import kg.tech.tradebackend.services.TaxService;
 import kg.tech.tradebackend.specifications.ItemSpecification;
 import kg.tech.tradebackend.specifications.OrderSpecification;
 import kg.tech.tradebackend.utils.BaseValidator;
@@ -29,34 +33,40 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderServiceImpl implements OrderService {
-
     OrderRepository orderRepository;
     OrderMapper orderMapper;
+    TaxService taxService;
     EmailSenderService emailSenderService;
-    CouponRepository couponRepository;
     UserRepository userRepository;
 
     @Override
     public OrderModel save(OrderModel orderModel) throws Exception {
-        validateOrder(orderModel);
-        emailSenderService.send(orderModel.getUserId(), "ORDER", orderModel.toEmailString());
+        validateAndSubtract(orderModel.getUserId(), orderModel.getPaymentMethod(), orderModel.getTotal());
+
         orderRepository.save(orderMapper.toEntity(orderModel));
         return orderModel;
     }
 
-    private void subtractAndToInvalidity(OrderModel orderModel, List<Long> coupons) {
-        List<Coupon> couponsEntity = couponRepository.findAllByIdInAndValidIsTrue(coupons);
-        BigDecimal subtractedTotal = orderModel.getTotal().subtract(applyCoupons(couponsEntity));
-        orderModel.setTotal(subtractedTotal);
+    @Override
+    public String apply(RequestOrderModel requestOrderModel) throws Exception {
+        Order order = orderRepository.findById(requestOrderModel.getOrderId()).orElseThrow();
+        order.setTransport(Transport.valueOf(requestOrderModel.getTransport()));
+        order.setPaymentMethod(PaymentMethod.valueOf(requestOrderModel.getPaymentMethod()));
+        taxService.apply(order, order.getTransport());
 
-        couponsEntity.forEach(coupon -> coupon.setValid(false));
-        couponRepository.saveAll(couponsEntity);
+        String payInfo = validateAndSubtract(requestOrderModel.getUserId(), order.getPaymentMethod(), order.getTotal());
+        emailSenderService.send(requestOrderModel.getUserId(), "ORDER", order.toEmailString(payInfo));
+        order.setStatus(OrderStatus.PACKAGED);
+        orderRepository.save(order);
+
+        return "SUCCESS";
     }
 
     @Override
@@ -109,26 +119,32 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new OrderException("ORDER_NOT_FOUND"));
     }
 
-    private BigDecimal applyCoupons(List<Coupon> coupons) {
-        return coupons
-                .stream()
-                .map(Coupon::getBonus)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
-    }
-
-    private void validateOrder(OrderModel orderModel) throws OrderException {
-        User user = userRepository.findById(orderModel.getUserId()).orElseThrow(() -> new OrderException("Пользователя с таким id нет"));
+    private String validateAndSubtract(Long userId, PaymentMethod paymentMethod, BigDecimal total) throws OrderException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new OrderException("Пользователя с таким id нет"));
         Card creditCard = user.getCreditCard();
 
-        if (user.getAddress() == null) throw new OrderException("Пожалуйста, укажите адрес");
+        if (user.getAddress() == null || user.getAddress().getLongitude() == null
+        && user.getAddress().getLatitude() == null) throw new OrderException("Пожалуйста, укажите адрес");
 
-        if (switch(orderModel.getPaymentMethod()) {
-            case BALANCE -> user.getBalance().compareTo(orderModel.getTotal()) < 0;
+
+        if (switch(paymentMethod) {
+            case BALANCE -> user.getBalance().compareTo(total) < 0;
             case INSTALLMENTS -> false;
-            case CREDIT_CARD ->
-                    BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() ) && creditCard.getExpiryDate() == null;
+            case CREDIT_CARD -> BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() ) && creditCard.getExpiryDate() == null;
         }) throw new OrderException("Не хватает средств");
+        else {
+            return switch (paymentMethod) {
+                case BALANCE -> {
+                    BigDecimal subtractedBalance = user.getBalance().subtract(total);
+                    user.setBalance(subtractedBalance);
+                    userRepository.save(user);
+                    yield "Успешно произведена оплата с баланса";
+                }
+                case INSTALLMENTS -> String.format("Ваш код %s для оформления рассрочки", UUID.randomUUID());
+                case CREDIT_CARD -> "Успешно произведена оплата с карты";
+            };
+        }
+
     }
 
     @Override

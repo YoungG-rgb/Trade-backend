@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Entity
 @Getter
@@ -55,7 +56,17 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void addToTotal(BigDecimal price) {
-        this.total.add(price);
+    public String toEmailString(String payInfo) {
+        StringJoiner emailText = new StringJoiner("\n");
+        return emailText
+                .add("Информация о заказе:")
+                .add("[")
+                .add("Статус: " + status.statusDescription())
+                .add("Создано: " + createdAt)
+                .add("Дата доставки: " + deliverDate)
+                .add("Товары: " + items.toString())
+                .add("Общая сумма: " + total)
+                .add(payInfo)
+                .add("]").toString();
     }
 }

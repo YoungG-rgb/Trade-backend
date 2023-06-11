@@ -17,7 +17,9 @@ function updateProfile() {
                 'town' : profileForm.find('#address_town').val(),
                 'street' : profileForm.find('#address_street').val(),
                 'houseNumber' : profileForm.find('#address_houseNumber').val(),
-                'houseType' : profileForm.find('#address_houseType').val()
+                'houseType' : profileForm.find('#address_houseType').val(),
+                'longitude' : profileForm.find('#address_longitude').val(),
+                'latitude' : profileForm.find('#address_latitude').val()
             },
             'creditCardModel' : {
                 'id' : profileForm.find('#card_id').val(),

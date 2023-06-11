@@ -66,4 +66,10 @@ public class Item {
         this.isActive = isActive;
         this.images = images;
     }
+
+    @Override
+    public String toString() {
+        return "{ имя ='" + name + '\'' +
+                ", цена =" + price + '}';
+    }
 }

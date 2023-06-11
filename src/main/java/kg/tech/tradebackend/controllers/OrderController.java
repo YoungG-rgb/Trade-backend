@@ -5,6 +5,7 @@ import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
 import kg.tech.tradebackend.domain.models.ItemModel;
 import kg.tech.tradebackend.domain.models.OrderModel;
+import kg.tech.tradebackend.domain.models.RequestOrderModel;
 import kg.tech.tradebackend.domain.models.data_tables.DataTablePage;
 import kg.tech.tradebackend.domain.response.ResponseModel;
 import kg.tech.tradebackend.services.OrderService;
@@ -46,5 +47,10 @@ public class OrderController extends BaseController {
     @PostMapping("/my-orders")
     public DataTablePage<OrderModel> getMyOrders(@RequestBody OrderFilterPattern orderFilterPattern) throws OrderException {
         return new DataTablePage<>(orderFilterPattern, orderService.findByUsername(SecurityUtils.getAuthenticatedUsername(), orderFilterPattern));
+    }
+
+    @PostMapping("/apply-order")
+    public ResponseModel<String> applyOrder(@RequestBody RequestOrderModel requestOrderModel) throws Exception {
+        return successResponse(orderService.apply(requestOrderModel));
     }
 }

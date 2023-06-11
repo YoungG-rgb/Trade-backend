@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Мои заказы</title>
@@ -33,6 +33,7 @@
                 </a>
 
                 <div class="dropdown-menu">
+                    <a sec:authorize="hasAuthority('ROLE_ADMIN')" class="dropdown-item" th:href="@{/admin/index}">Таблицы</a>
                     <a class="dropdown-item" th:href="@{/settings}">Профиль</a>
                     <a class="dropdown-item" th:href="@{/orders}">Заказы</a>
                     <a class="dropdown-item" th:href="@{/cart}">Корзина</a>
@@ -72,6 +73,17 @@
 
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="email" aria-label="email" id="email" th:value="${user.getEmail()}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address_longitude">Долгота</label>
+                            <input type="text" class="form-control" id="address_longitude"
+                                   th:value="${user.addressModel ne null && user.addressModel.longitude != null ? user.addressModel.longitude : ''}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address_latitude">Широта</label>
+                            <input type="text" class="form-control" id="address_latitude"
+                                   th:value="${user.addressModel ne null && user.addressModel.latitude != null ? user.addressModel.latitude : ''}">
                         </div>
                     </div>
                 </div>
@@ -182,7 +194,7 @@
                                     </div>
                                     <br>
                                     <div style="height: 55px;">
-                                        <button type="button" class="custom-button">Подтвердить заказ</button>
+                                        <button type="button" class="custom-button" onclick="completeOrder('BALANCE')">Подтвердить заказ</button>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +238,7 @@
                                 </div>
                                 <br>
                                 <div style="height: 55px;">
-                                    <button type="button" class="custom-button">Подтвердить заказ</button>
+                                    <button type="button" class="custom-button" onclick="completeOrder('CREDIT_CARD')">Подтвердить заказ</button>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +340,9 @@
                                             <p> Call - центр : 6111 </p>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                                                <button type="button" class="btn btn-success" id="completeOrderBakai" style="background: #735CFF;">Подтвердить заказ</button>
+                                                <button type="button" class="btn btn-success"
+                                                        onclick="completeOrder('INSTALLMENTS')"
+                                                        style="background: #735CFF;">Подтвердить заказ</button>
                                             </div>
                                         </div>
                                     </div>

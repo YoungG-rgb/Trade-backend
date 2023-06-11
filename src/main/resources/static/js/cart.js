@@ -3,6 +3,7 @@ const userCoupons = $('#couponsByUserId');
 const orderHistory = $('#orderHistory');
 let $liveToast = $('#liveToast');
 let $liveToastError = $('#liveToastError');
+let orderId;
 
 $(document).ready(() => {
     let userId = $('#userId').val();
@@ -11,6 +12,7 @@ $(document).ready(() => {
             .then(function (response) {
                 response.json().then(function (orders) {
                     let orderModel = orders.result;
+                    orderId = orderModel.id;
                     if (orderModel !== null) {
                         let itemArray = orderModel.items;
                         for (let i = 0; i < itemArray.length; i++) {
@@ -123,5 +125,36 @@ function showError(message) {
     $liveToastError.toast('show')
     $liveToastError.on('hidden.bs.toast', function () {
         location.reload()
+    })
+}
+
+function completeOrder(payMethod) {
+    let transport;
+    if ($('#ups-express').is(":checked")) {
+        transport = 'PLANE'
+    } else {
+        transport = 'MACHINE'
+    }
+
+    fetch(new Request('/api/order/apply-order', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                'orderId': orderId,
+                'userId': $('#userId').val(),
+                'paymentMethod': payMethod,
+                'transport': transport
+            })
+        })
+    ).then(function (response) {
+        response.json().then(function (responseModel) {
+            if (responseModel.result === 'SUCCESS') {
+                $('#bakai-info').modal('hide')
+                alert('Заказ успешно оформлен')
+            } else {
+                $('#bakai-info').modal('hide')
+                alert('Ошибка, проверьте корректность данных')
+            }
+        })
     })
 }

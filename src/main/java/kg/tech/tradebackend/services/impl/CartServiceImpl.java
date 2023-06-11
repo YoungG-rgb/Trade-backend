@@ -39,7 +39,7 @@ public class CartServiceImpl implements CartService {
             initializeOrder(item, user);
         } else {
             order.getItems().add(item);
-            order.addToTotal(item.getPrice());
+            order.setTotal(order.getTotal().add(item.getPrice()));
             orderRepository.save(order);
         }
 

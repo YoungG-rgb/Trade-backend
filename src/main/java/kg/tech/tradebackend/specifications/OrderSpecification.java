@@ -1,7 +1,5 @@
 package kg.tech.tradebackend.specifications;
 
-import kg.tech.tradebackend.domain.entities.Address;
-import kg.tech.tradebackend.domain.entities.Item;
 import kg.tech.tradebackend.domain.entities.Order;
 import kg.tech.tradebackend.domain.entities.User;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
@@ -22,7 +20,7 @@ public class OrderSpecification implements Specification<Order> {
         final List<Predicate> predicates = new ArrayList<>(2);
         Join<User, Order> orderUserJoin = root.join("user");
         predicates.add( criteriaBuilder.like( orderUserJoin.get("username"), user.getUsername() ) );
-        predicates.add( criteriaBuilder.equal(root.get("status"), orderFilterPattern.getOrderStatus()) );
+        predicates.add( criteriaBuilder.notEqual(root.get("status"), orderFilterPattern.getOrderStatus()) );
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }

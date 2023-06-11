@@ -30,7 +30,7 @@ function initExtItemsTable(){
         scrollX: false,
         language: DATATABLES_RU_LANGUAGE_CONFIG,
         "ajax": {
-            "url": `${$_BASE_ROOT_URL}admin/items/filter`,
+            "url": `${$_BASE_ROOT_URL}ext-api/items/filter`,
             "type": "POST",
             "contentType": "application/json; charset=utf-8",
             "dataType": 'json',

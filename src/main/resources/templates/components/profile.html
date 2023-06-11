@@ -77,6 +77,16 @@
                                 <input type="text" class="form-control" id="address_houseType"
                                        th:value="${user.addressModel ne null && user.addressModel.houseType != null ? user.addressModel.houseType : ''}">
                             </div>
+                            <div class="form-group">
+                                <label for="address_longitude">Долгота</label>
+                                <input type="text" class="form-control" id="address_longitude"
+                                       th:value="${user.addressModel ne null && user.addressModel.longitude != null ? user.addressModel.longitude : ''}">
+                            </div>
+                            <div class="form-group">
+                                <label for="address_latitude">Широта</label>
+                                <input type="text" class="form-control" id="address_latitude"
+                                       th:value="${user.addressModel ne null && user.addressModel.latitude != null ? user.addressModel.latitude : ''}">
+                            </div>
                         </div>
                     </div>
                 </div>

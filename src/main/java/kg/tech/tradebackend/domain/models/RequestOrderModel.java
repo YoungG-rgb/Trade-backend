@@ -4,16 +4,13 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AddressModel {
-    Long id;
-    String town;
-    String street;
-    String houseNumber;
-    String houseType;
-    Double longitude;
-    Double latitude;
+public class RequestOrderModel {
+    Long orderId;
+    Long userId;
+    String paymentMethod;
+    String transport;
 }

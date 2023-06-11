@@ -38,5 +38,7 @@ public class Address {
         this.street = addressModel.getStreet();
         this.houseNumber = addressModel.getHouseNumber();
         this.houseType = HouseType.valueOf(addressModel.getHouseType());
+        this.longitude = addressModel.getLongitude();
+        this.latitude = addressModel.getLatitude();
     }
 }
