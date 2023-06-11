@@ -3,10 +3,8 @@ package kg.tech.tradebackend.domain.models;
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.enums.PaymentMethod;
 import kg.tech.tradebackend.domain.enums.Transport;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,6 +16,7 @@ import java.util.StringJoiner;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderModel {
     Long id;
 

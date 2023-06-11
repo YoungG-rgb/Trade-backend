@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.util.concurrent.SuccessCallback;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -59,5 +61,14 @@ public class OrderController extends BaseController {
     @GetMapping("/loadMap/{id}")
     public ResponseModel<AddressModel> loadMap(@PathVariable("id") Long orderId) {
         return successResponse(orderService.loadMapByOrderId(orderId));
+    }
+
+    @PostMapping("/export-xls/{userId}")
+    public ResponseModel<byte[]> exportXls(@PathVariable Long userId) throws IOException {
+        try(ByteArrayOutputStream resource = orderService.exportOrderReport(userId)) {
+            if (resource == null) throw new IllegalStateException("Произошла ошибка при формировании файла");
+
+            return successResponse(resource.toByteArray());
+        }
     }
 }

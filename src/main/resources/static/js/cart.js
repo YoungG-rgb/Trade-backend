@@ -148,7 +148,7 @@ function completeOrder(payMethod) {
         })
     ).then(function (response) {
         response.json().then(function (responseModel) {
-            if (responseModel.result === 'SUCCESS') {
+            if (responseModel.resultCode === 'SUCCESS') {
                 $('#bakai-info').modal('hide')
                 alert('Заказ успешно оформлен')
             } else {

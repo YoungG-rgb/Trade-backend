@@ -8,6 +8,8 @@ import kg.tech.tradebackend.domain.models.OrderModel;
 import kg.tech.tradebackend.domain.models.RequestOrderModel;
 import org.springframework.data.domain.Page;
 
+import java.io.ByteArrayOutputStream;
+
 public interface OrderService {
     OrderModel save(OrderModel orderModel) throws Exception;
     String apply(RequestOrderModel requestOrderModel) throws Exception;
@@ -22,4 +24,6 @@ public interface OrderService {
     Page<OrderModel> findByUsername(String username, OrderFilterPattern orderFilterPattern) throws OrderException;
 
     AddressModel loadMapByOrderId(Long orderId);
+
+    ByteArrayOutputStream exportOrderReport(Long userId);
 }

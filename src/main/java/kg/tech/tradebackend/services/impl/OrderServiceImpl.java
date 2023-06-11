@@ -7,6 +7,7 @@ import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
 import kg.tech.tradebackend.domain.models.AddressModel;
+import kg.tech.tradebackend.domain.models.OrderReport;
 import kg.tech.tradebackend.domain.models.RequestOrderModel;
 import kg.tech.tradebackend.mappers.AddressMapper;
 import kg.tech.tradebackend.repositories.ItemRepository;
@@ -23,14 +24,19 @@ import kg.tech.tradebackend.repositories.UserRepository;
 import kg.tech.tradebackend.services.EmailSenderService;
 import kg.tech.tradebackend.services.OrderService;
 import kg.tech.tradebackend.utils.SecurityUtils;
+import kg.tech.tradebackend.utils.excel.ExcelUtils;
+import kg.tech.tradebackend.utils.excel.WorkbookBuilder;
+import kg.tech.tradebackend.utils.excel.WorkbookReference;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -167,5 +173,21 @@ public class OrderServiceImpl implements OrderService {
     public AddressModel loadMapByOrderId(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow();
         return addressMapper.toModel(order.getUser().getAddress());
+    }
+
+    @Override
+    public ByteArrayOutputStream exportOrderReport(Long userId) {
+        List<OrderReport> orderReports = orderRepository.findByUserId(userId).stream().map(OrderReport::new).toList();
+
+        WorkbookReference workbookRef = new WorkbookBuilder()
+                .sheet()
+                .title("Отчет по рекламе O! Store")
+                .from(orderReports)
+                .endSheet()
+                .build();
+
+        Workbook workbook = workbookRef.toWorkbook();
+        ExcelUtils.autoSizeAllSheets(workbook);
+        return ExcelUtils.workbookToResource(workbook);
     }
 }

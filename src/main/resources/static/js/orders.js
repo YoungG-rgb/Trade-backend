@@ -40,3 +40,28 @@ function renderMap(data, type, row){
                 </button>
             </td>`
 }
+
+function renderReport(){
+    fetch(new Request('/api/order/export-xls/' + $('#userId').val(), {
+            method: 'POST',
+            headers: {'content-type': 'application/json'}
+        })
+    ).then(function (response) {
+        response.json().then(function (responseModel) {
+            if (responseModel.resultCode === 'SUCCESS') {
+                debugger;
+                const downloadLink = document.createElement("a");
+                document.body.appendChild(downloadLink);
+
+                let mediaType="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,";
+
+                downloadLink.href = mediaType + responseModel.result;
+                downloadLink.target = "_self";
+                downloadLink.download = "order-report" + ".xlsx";
+                downloadLink.click();
+            } else {
+                alert('ОШИБКА')
+            }
+        })
+    })
+}
