@@ -3,6 +3,7 @@ package kg.tech.tradebackend.services;
 import kg.tech.tradebackend.domain.enums.OrderStatus;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
+import kg.tech.tradebackend.domain.models.AddressModel;
 import kg.tech.tradebackend.domain.models.OrderModel;
 import kg.tech.tradebackend.domain.models.RequestOrderModel;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,5 @@ public interface OrderService {
 
     Page<OrderModel> findByUsername(String username, OrderFilterPattern orderFilterPattern) throws OrderException;
 
+    AddressModel loadMapByOrderId(Long orderId);
 }

@@ -40,7 +40,3 @@ function renderMap(data, type, row){
                 </button>
             </td>`
 }
-
-function loadMap(id) {
-
-}

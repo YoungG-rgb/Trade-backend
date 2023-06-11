@@ -6,7 +6,9 @@ import kg.tech.tradebackend.domain.enums.Transport;
 import kg.tech.tradebackend.domain.exceptions.OrderException;
 import kg.tech.tradebackend.domain.exceptions.TradeException;
 import kg.tech.tradebackend.domain.filterPatterns.OrderFilterPattern;
+import kg.tech.tradebackend.domain.models.AddressModel;
 import kg.tech.tradebackend.domain.models.RequestOrderModel;
+import kg.tech.tradebackend.mappers.AddressMapper;
 import kg.tech.tradebackend.repositories.ItemRepository;
 import kg.tech.tradebackend.services.TaxService;
 import kg.tech.tradebackend.specifications.ItemSpecification;
@@ -45,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
     TaxService taxService;
     EmailSenderService emailSenderService;
     UserRepository userRepository;
+    AddressMapper addressMapper;
 
     @Override
     public OrderModel save(OrderModel orderModel) throws Exception {
@@ -158,5 +161,11 @@ public class OrderServiceImpl implements OrderService {
                 paginationCriteria.toPageRequest(),
                 orderPage.getTotalPages()
         );
+    }
+
+    @Override
+    public AddressModel loadMapByOrderId(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        return addressMapper.toModel(order.getUser().getAddress());
     }
 }

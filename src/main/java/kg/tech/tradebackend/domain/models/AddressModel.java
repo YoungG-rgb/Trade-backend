@@ -3,6 +3,8 @@ package kg.tech.tradebackend.domain.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,4 +18,8 @@ public class AddressModel {
     String houseType;
     Double longitude;
     Double latitude;
+
+    public List<Double> getCoordinates(){
+        return List.of(latitude, longitude);
+    }
 }
