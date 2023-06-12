@@ -153,7 +153,11 @@ public class UserServiceImpl implements UserService {
         Order order = orderRepository.findByUserIdAndStatusIs(userId, OrderStatus.START);
         if (order == null) throw new TradeException("Ошибка, в корзине нет товаров");
         order.setTotal(order.getTotal().subtract(coupon.getBonus()));
-        order.setHistory(order.getHistory() + String.format(HISTORY_PLACEHOLDER, coupon.getBonus(), order.getTotal()));
+        if (order.getHistory() != null) {
+            order.setHistory(order.getHistory() + String.format(HISTORY_PLACEHOLDER, coupon.getBonus(), order.getTotal()));
+        } else {
+            order.setHistory(String.format(HISTORY_PLACEHOLDER, coupon.getBonus(), order.getTotal()));
+        }
 
         orderRepository.save(order);
         couponRepository.save(coupon);

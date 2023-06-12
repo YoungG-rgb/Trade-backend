@@ -148,12 +148,14 @@ function completeOrder(payMethod) {
         })
     ).then(function (response) {
         response.json().then(function (responseModel) {
-            if (responseModel.resultCode === 'SUCCESS') {
+            if (responseModel.result === 'SUCCESS') {
                 $('#bakai-info').modal('hide')
                 alert('Заказ успешно оформлен')
+                location.reload()
             } else {
                 $('#bakai-info').modal('hide')
                 alert('Ошибка, проверьте корректность данных')
+                location.reload()
             }
         })
     })

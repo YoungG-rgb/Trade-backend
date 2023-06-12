@@ -139,7 +139,8 @@ public class OrderServiceImpl implements OrderService {
         if (switch(paymentMethod) {
             case BALANCE -> user.getBalance().compareTo(total) < 0;
             case INSTALLMENTS -> false;
-            case CREDIT_CARD -> BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() ) && creditCard.getExpiryDate() == null;
+            case CREDIT_CARD -> BaseValidator.isEmpty( creditCard.getCardNumber(), creditCard.getCvcAndCvv() )
+                    && creditCard.getExpiryDate() == null;
         }) throw new OrderException("Не хватает средств");
         else {
             return switch (paymentMethod) {
